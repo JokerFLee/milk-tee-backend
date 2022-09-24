@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
  **/
 public class series {
     @TableId
-    int suid;
+    Integer suid;
     String name;
 
     @Override
@@ -20,11 +20,11 @@ public class series {
                 '}';
     }
 
-    public int getSuid() {
+    public Integer getSuid() {
         return suid;
     }
 
-    public void setSuid(int suid) {
+    public void setSuid(Integer suid) {
         this.suid = suid;
     }
 
