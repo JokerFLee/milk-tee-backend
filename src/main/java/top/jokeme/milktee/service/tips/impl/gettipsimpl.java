@@ -29,7 +29,7 @@ public class gettipsimpl implements gettips {
         Logger logger = LoggerFactory.getLogger(getClass());
 
         List<tips> tipslist = tipsMp.selectList(null);
-        logger.info(tipslist.toString());
+        logger.info("xxx request for all tips list");
         return tipslist;
     }
 
@@ -38,10 +38,10 @@ public class gettipsimpl implements gettips {
         Logger logger = LoggerFactory.getLogger(getClass());
         QueryWrapper qw = new QueryWrapper();
         qw.eq("name",st);
-        logger.info("Getting request for check tip exist by name >> '" +st+"'");
+        logger.info("Getting request for check tip exist by name : '" +st+"'");
         tips tp = tipsMp.selectOne(qw);
-        System.out.println(tp);
         if (tp == null){
+            logger.warn("The request for name : '"+st+"' not exist in tips");
             return false;
         }
         return true;
