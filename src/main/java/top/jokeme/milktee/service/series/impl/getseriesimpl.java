@@ -26,11 +26,25 @@ public class getseriesimpl implements getseries {
     public boolean getseriesbyname(String name) {
         Logger logger = LoggerFactory.getLogger(getClass());
         QueryWrapper qw = new QueryWrapper();
-        qw.eq("name",name);
-        logger.info("Getting request for check series exist by name : '" +name+"'");
+        qw.eq("name", name);
+        logger.info("Getting request for check series exist by name : '" + name + "'");
         series x = seriesMp.selectOne(qw);
-        if (x == null){
-            logger.warn("The request for name : '"+name+"' not exist in tips");
+        if (x == null) {
+            logger.warn("The request for name : '" + name + "' not exist in series");
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public boolean getseriesbyuuid(Integer uuid) {
+        Logger logger = LoggerFactory.getLogger(getClass());
+        QueryWrapper qw = new QueryWrapper();
+        qw.eq("suid", uuid);
+        logger.info("Getting request for check series exist by suid : '" + uuid + "'");
+        series x = seriesMp.selectOne(qw);
+        if (x == null) {
+            logger.warn("The request for suid : '" + uuid + "' not exist in series");
             return false;
         }
         return true;

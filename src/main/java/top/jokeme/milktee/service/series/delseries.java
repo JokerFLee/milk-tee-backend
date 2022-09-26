@@ -6,4 +6,5 @@ package top.jokeme.milktee.service.series;
  * date:         2022/9/24
  **/
 public interface delseries {
+    String delseries (String suid);
 }

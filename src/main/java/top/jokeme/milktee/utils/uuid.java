@@ -1,4 +1,5 @@
 package top.jokeme.milktee.utils;
+
 import java.util.UUID;
 
 /**
@@ -8,7 +9,19 @@ import java.util.UUID;
  **/
 
 public class uuid {
-    public String  generateuuid(){
+    public String generateuuid(){
         return String.valueOf(UUID.randomUUID());
+    }
+
+    public Integer shortuuid(){
+        Integer x = x();
+        while (x<10000000){
+            x=x();
+        }
+        return x;
+    }
+    public int x(){
+        Double x = Math.random()*100000000;
+        return x.intValue();
     }
 }
