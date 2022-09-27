@@ -29,8 +29,13 @@ public class addserviceimpl implements addseries {
     public String addseries(String se) {
         Logger logger = LoggerFactory.getLogger(getClass());
 
+        if(se==""){
+            logger.warn("Can't add null series name");
+            return "error";
+        }
         uuid uid = new uuid();
         Integer x = uid.shortuuid();
+
 
         while (getseries.getseriesbyuuid(x)){
             x = uid.shortuuid();

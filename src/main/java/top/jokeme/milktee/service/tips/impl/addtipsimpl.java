@@ -28,6 +28,12 @@ public class addtipsimpl implements addtips {
     @Override
     public String addtips(String tips) {
         Logger logger = LoggerFactory.getLogger(getClass());
+
+        if (tips == "") {
+            logger.warn("Can't add null tip name");
+            return "error";
+        }
+
         uuid uid = new uuid();
         Integer x = uid.shortuuid();
 

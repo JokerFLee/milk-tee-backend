@@ -7,6 +7,6 @@ import java.util.Map;
  * author:       frelon
  * date:         2022/9/19
  **/
-public interface addnewtee {
-    Integer addnewmilktee(Map<String,String> map);
+public interface addmilktea {
+    Integer addmilktee(Map<String,String> map);
 }

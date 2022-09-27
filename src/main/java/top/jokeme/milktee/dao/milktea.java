@@ -7,14 +7,14 @@ import com.baomidou.mybatisplus.annotation.TableId;
  * author:       frelon
  * date:         2022/9/19
  **/
-public class milktee {
+public class milktea {
     @TableId
     String guid;
     String name;
     float price;
     String picurl;
     String intro;
-    String topic;
+    String tips;
     String series;
     String create_date;
     float discount;
@@ -28,7 +28,7 @@ public class milktee {
                 ", price=" + price +
                 ", picurl='" + picurl + '\'' +
                 ", intro='" + intro + '\'' +
-                ", topic='" + topic + '\'' +
+                ", topic='" + tips + '\'' +
                 ", series='" + series + '\'' +
                 ", create_date='" + create_date + '\'' +
                 ", discount=" + discount +
@@ -71,11 +71,20 @@ public class milktee {
         this.intro = intro;
     }
 
-    public String getTopic() {
-        return topic;
+    public String getTips() {
+        return tips;
     }
-    public void setTopic(String topic) {
-        this.topic = topic;
+
+    public void setTips(String tips) {
+        this.tips = tips;
+    }
+
+    public String getCreate_date() {
+        return create_date;
+    }
+
+    public void setCreate_date(String create_date) {
+        this.create_date = create_date;
     }
 
     public String getSeries() {
@@ -83,13 +92,6 @@ public class milktee {
     }
     public void setSeries(String series) {
         this.series = series;
-    }
-
-    public String getCreate_data() {
-        return create_date;
-    }
-    public void setCreate_data(String create_date) {
-        this.create_date = create_date;
     }
 
     public float getDiscount() {
