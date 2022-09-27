@@ -11,4 +11,5 @@ import java.util.Map;
 public interface gettips {
     List gettips();
     Boolean gettips(String st);
+    Boolean gettipbytuid(Integer tuid);
 }

@@ -3,8 +3,11 @@ package top.jokeme.milktee.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import top.jokeme.milktee.service.milktee.addnewtee;
+import org.springframework.web.multipart.MultipartFile;
+import top.jokeme.milktee.service.milktee.addmilktea;
+import top.jokeme.milktee.service.milktee.uploadpic;
 
+import java.io.IOException;
 import java.util.Map;
 
 /**
@@ -19,12 +22,21 @@ import java.util.Map;
 public class milkteectl {
 
     @Autowired
-    private addnewtee addnewtee;
+    private addmilktea addmilktea;
+
+    @Autowired
+    private uploadpic uploadpic;
 
     @ResponseBody
-    @PostMapping("addnewtee")
-    public Integer addnewmilktee(@RequestBody Map map){
-        return addnewtee.addnewmilktee(map);
+    @PostMapping("addmilktea")
+    public Integer add_a_milktea(@RequestBody Map map){
+        return addmilktea.addmilktee(map);
+    }
+
+    @ResponseBody
+    @PostMapping("uploadpic")
+    public String uploadpicture(@RequestParam("file") MultipartFile file) throws IOException {
+        return uploadpic.uploadpicture(file);
     }
 
 

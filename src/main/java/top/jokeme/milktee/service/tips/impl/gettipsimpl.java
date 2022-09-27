@@ -46,4 +46,18 @@ public class gettipsimpl implements gettips {
         }
         return true;
     }
+
+    @Override
+    public Boolean gettipbytuid(Integer tuid) {
+        Logger logger = LoggerFactory.getLogger(getClass());
+        QueryWrapper qw = new QueryWrapper();
+        qw.eq("tuid", tuid);
+        logger.info("Getting request for check tips exist by tuid : '" + tuid + "'");
+        tips x = tipsMp.selectOne(qw);
+        if (x == null) {
+            logger.warn("The request for tuid : '" + tuid + "' not exist in tips");
+            return false;
+        }
+        return true;
+    }
 }

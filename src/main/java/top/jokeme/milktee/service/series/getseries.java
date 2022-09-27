@@ -9,5 +9,6 @@ import java.util.List;
  **/
 public interface getseries {
     boolean getseriesbyname(String name);
+    boolean getseriesbyuuid(Integer uuid);
     List getallseries();
 }
