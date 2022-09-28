@@ -35,7 +35,7 @@ public class milkteectl {
 
     @ResponseBody
     @PostMapping("uploadpic")
-    public String uploadpicture(@RequestParam("file") MultipartFile file) throws IOException {
+    public Map<String, String> uploadpicture(@RequestParam("file") MultipartFile file) throws IOException {
         return uploadpic.uploadpicture(file);
     }
 
