@@ -1,4 +1,4 @@
-package top.jokeme.milktee.service.milktee.impl;
+package top.jokeme.milktee.service.milktea.impl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import top.jokeme.milktee.dao.milktea;
 import top.jokeme.milktee.mapper.milkteaMp;
-import top.jokeme.milktee.service.milktee.addmilktea;
+import top.jokeme.milktee.service.milktea.addmilktea;
 import top.jokeme.milktee.utils.NTime;
 import top.jokeme.milktee.utils.uuid;
 

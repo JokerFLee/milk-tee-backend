@@ -1,7 +1,6 @@
 package top.jokeme.milktee.service.tips;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * project_name: milk-tee

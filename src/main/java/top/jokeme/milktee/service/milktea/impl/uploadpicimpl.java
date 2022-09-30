@@ -1,14 +1,13 @@
-package top.jokeme.milktee.service.milktee.impl;
+package top.jokeme.milktee.service.milktea.impl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import top.jokeme.milktee.dao.uri;
 import top.jokeme.milktee.mapper.uriMp;
-import top.jokeme.milktee.service.milktee.uploadpic;
+import top.jokeme.milktee.service.milktea.uploadpic;
 import top.jokeme.milktee.utils.NTime;
 import top.jokeme.milktee.utils.uuid;
 

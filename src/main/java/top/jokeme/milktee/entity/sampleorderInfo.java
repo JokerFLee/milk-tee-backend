@@ -5,7 +5,7 @@ package top.jokeme.milktee.entity;
  * author:       frelon
  * date:         2022/9/19
  **/
-public class ettOrderInfo {
+public class sampleorderInfo {
     Integer ouid;
     String order_detail;
     String order_time;

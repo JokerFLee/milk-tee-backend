@@ -1,4 +1,4 @@
-package top.jokeme.milktee.service.milktee;
+package top.jokeme.milktee.service.milktea;
 
 import java.util.Map;
 

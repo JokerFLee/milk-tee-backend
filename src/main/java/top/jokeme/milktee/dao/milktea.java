@@ -8,7 +8,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
  * date:         2022/9/19
  **/
 public class milktea {
-    @TableId
+
     String guid;
     String name;
     float price;
@@ -39,13 +39,15 @@ public class milktea {
     public String getGuid() {
         return guid;
     }
-    public void setGuid(String  guid) {
+
+    public void setGuid(String guid) {
         this.guid = guid;
     }
 
     public String getName() {
         return name;
     }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -53,6 +55,7 @@ public class milktea {
     public float getPrice() {
         return price;
     }
+
     public void setPrice(float price) {
         this.price = price;
     }
@@ -60,6 +63,7 @@ public class milktea {
     public String getPicurl() {
         return picurl;
     }
+
     public void setPicurl(String picurl) {
         this.picurl = picurl;
     }
@@ -67,6 +71,7 @@ public class milktea {
     public String getIntro() {
         return intro;
     }
+
     public void setIntro(String intro) {
         this.intro = intro;
     }
@@ -90,6 +95,7 @@ public class milktea {
     public String getSeries() {
         return series;
     }
+
     public void setSeries(String series) {
         this.series = series;
     }
@@ -97,6 +103,7 @@ public class milktea {
     public float getDiscount() {
         return discount;
     }
+
     public void setDiscount(float discount) {
         this.discount = discount;
     }
@@ -104,7 +111,31 @@ public class milktea {
     public byte getSoldout() {
         return soldout;
     }
+
     public void setSoldout(byte soldout) {
         this.soldout = soldout;
+    }
+
+    public milktea iswhich(milktea mt, String str, String value) {
+        if (str.equals("name")) {
+            mt.setName(value);
+        } else if (str.equals("price")) {
+            mt.setPrice(Float.parseFloat(value));
+        } else if (str.equals("picurl")) {
+            mt.setPicurl(value);
+        } else if (str.equals("intro")) {
+            mt.setIntro(value);
+        } else if (str.equals("tips")) {
+            mt.setTips(value);
+        } else if (str.equals("series")) {
+            mt.setSeries(value);
+        } else if (str.equals("create_date")) {
+            mt.setCreate_date(value);
+        } else if (str.equals("discount")) {
+            mt.setDiscount(Float.parseFloat(value));
+        } else if (str.equals("soldout")) {
+            mt.setSoldout(Byte.parseByte(value));
+        }
+        return mt;
     }
 }

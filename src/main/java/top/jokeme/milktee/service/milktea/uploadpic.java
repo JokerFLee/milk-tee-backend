@@ -1,8 +1,7 @@
-package top.jokeme.milktee.service.milktee;
+package top.jokeme.milktee.service.milktea;
 
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.Map;
 
