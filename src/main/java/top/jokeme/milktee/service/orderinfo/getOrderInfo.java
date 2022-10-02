@@ -1,7 +1,5 @@
 package top.jokeme.milktee.service.orderinfo;
 
-import top.jokeme.milktee.entity.ettOrderInfo;
-
 import java.util.List;
 
 /**
