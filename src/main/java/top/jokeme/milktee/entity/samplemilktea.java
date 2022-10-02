@@ -88,4 +88,19 @@ public class samplemilktea {
     public void setSeries(String series) {
         this.series = series;
     }
+
+    @Override
+    public String toString() {
+        return "samplemilktea{" +
+                "guid='" + guid + '\'' +
+                ", name='" + name + '\'' +
+                ", price=" + price +
+                ", soldout=" + soldout +
+                ", discount=" + discount +
+                ", picurl='" + picurl + '\'' +
+                ", intro='" + intro + '\'' +
+                ", tips='" + tips + '\'' +
+                ", series='" + series + '\'' +
+                '}';
+    }
 }

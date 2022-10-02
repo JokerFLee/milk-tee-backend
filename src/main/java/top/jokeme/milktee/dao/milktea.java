@@ -115,8 +115,7 @@ public class milktea {
     public void setSoldout(byte soldout) {
         this.soldout = soldout;
     }
-
-    public milktea iswhich(milktea mt, String str, String value) {
+        public milktea iswhich(milktea mt, String str, String value) {
         if (str.equals("name")) {
             mt.setName(value);
         } else if (str.equals("price")) {
@@ -129,8 +128,6 @@ public class milktea {
             mt.setTips(value);
         } else if (str.equals("series")) {
             mt.setSeries(value);
-        } else if (str.equals("create_date")) {
-            mt.setCreate_date(value);
         } else if (str.equals("discount")) {
             mt.setDiscount(Float.parseFloat(value));
         } else if (str.equals("soldout")) {

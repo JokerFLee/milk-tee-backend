@@ -1,7 +1,11 @@
 package top.jokeme.milktee.utils;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import top.jokeme.milktee.dao.milktea;
 import top.jokeme.milktee.entity.samplemilktea;
+import top.jokeme.milktee.service.milktea.getmilkteainfo;
+import top.jokeme.milktee.service.milktea.impl.getmilkteainfoimpl;
 
 /**
  * project_name: milk-tee
@@ -10,7 +14,9 @@ import top.jokeme.milktee.entity.samplemilktea;
  **/
 
 public class toOriginal {
-    public milktea toOriginalMilkTea(samplemilktea samplemilktea){
+
+    public milktea getOriginalMilkTea(samplemilktea samplemilktea) {
+
         milktea mt = new milktea();
         mt.setGuid(samplemilktea.getGuid());
         mt.setName(samplemilktea.getName());

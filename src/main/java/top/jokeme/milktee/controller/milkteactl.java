@@ -6,10 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import top.jokeme.milktee.dao.milktea;
 import top.jokeme.milktee.entity.samplemilktea;
-import top.jokeme.milktee.service.milktea.addmilktea;
-import top.jokeme.milktee.service.milktea.getmilkteainfo;
-import top.jokeme.milktee.service.milktea.updatemilktea;
-import top.jokeme.milktee.service.milktea.uploadpic;
+import top.jokeme.milktee.service.milktea.*;
 
 import java.io.IOException;
 import java.util.List;
@@ -36,6 +33,9 @@ public class milkteactl {
 
     @Autowired
     private updatemilktea updatemilktea;
+
+    @Autowired
+    private delMilkTea delMilkTea;
 
     @ResponseBody
     @PostMapping("addmilktea")
@@ -64,19 +64,24 @@ public class milkteactl {
 
     @ResponseBody
     @RequestMapping("getmilkteabyid")
-    public milktea getMilkteaDetailInfoByGuid(String guid) {
+    public samplemilktea getMilkteaDetailInfoByGuid(String guid) {
         return getmilkteainfo.getMilkTeaInfoByGuid(guid);
     }
 
     @ResponseBody
-    @RequestMapping("updatemilktea")
-    public String updatemilkteabyguid(String guid, samplemilktea samplemilktea) {
-        return updatemilktea.updatemilkteabuguid(guid, samplemilktea);
+    @PostMapping("updatemilktea")
+    public String updatemilkteabyguid( @RequestBody samplemilktea samplemilktea) {
+        return updatemilktea.updatemilkteabuguid(samplemilktea);
     }
 
     @ResponseBody
     @RequestMapping("updteacolumemilktea")
     public String updateacolumemilkteabyguid(String guid, String colume, String value) {
         return updatemilktea.updateonecolume(guid, colume, value);
+    }
+    @ResponseBody
+    @RequestMapping("delmilktea")
+    public String delmilkteabyguid(String guid) {
+        return delMilkTea.delMilkByGuid(guid);
     }
 }
