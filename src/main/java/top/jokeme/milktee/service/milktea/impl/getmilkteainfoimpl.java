@@ -28,9 +28,9 @@ public class getmilkteainfoimpl implements getmilkteainfo {
     private milkteaMp milkteaMp;
 
     /*
-    * 把查到的所有的milktea -> samplemilktea
-    * 然后返回给前端。
-    * */
+     * 把查到的所有的milktea -> samplemilktea
+     * 然后返回给前端。
+     * */
     @Override
     public List<samplemilktea> getmilktealist(String token) {
         Logger logger = LoggerFactory.getLogger(getClass());
@@ -42,7 +42,7 @@ public class getmilkteainfoimpl implements getmilkteainfo {
         List<milktea> list = milkteaMp.selectList(qw);
         List<samplemilktea> filist = new ArrayList();
 
-        for (milktea mt : list){
+        for (milktea mt : list) {
             filist.add(new toSample().getsamplemilktea(mt));
         }
         logger.info("xxx request for all Milktea list");
@@ -50,45 +50,62 @@ public class getmilkteainfoimpl implements getmilkteainfo {
     }
 
     /*
-    * 接口给前端调用的，所以检查名字是否已经存在
-    * */
+     * 接口给前端调用的，所以检查名字是否已经存在
+     * */
     @Override
     public boolean checkExistByName(String name) {
         Logger logger = LoggerFactory.getLogger(getClass());
-        logger.info("Get request for check the name : "+name+" is exist in milktea. Passed");
+        logger.info("Get request for check the name : " + name + " is exist in milktea. Passed");
         QueryWrapper qw = new QueryWrapper<>();
-        qw.eq("name",name);
+        qw.eq("name", name);
         return milkteaMp.exists(qw);
     }
 
     /*
-    * 这个方法主要是拿数据给前端用，所以用了 samplemilktea类型。
-    * 也返回 samplemilktea类型
-    * */
+     * 这个方法主要是拿数据给前端用，所以用了 samplemilktea类型。
+     * 也返回 samplemilktea类型
+     * */
     @Override
     public samplemilktea getMilkTeaInfoByGuid(String guid) {
         Logger logger = LoggerFactory.getLogger(getClass());
-        logger.info("{return samplemilktea} Get request to get the detail infomation of guid : "+guid+" in milktea. Passed");
-        QueryWrapper qw = new QueryWrapper<>().eq("guid",guid);
-        samplemilktea samplemilktea =  new toSample().getsamplemilktea(milkteaMp.selectOne(qw));
+        logger.info("{return samplemilktea} Get request to get the detail infomation of guid : " + guid + " in milktea. Passed");
+        QueryWrapper qw = new QueryWrapper<>().eq("guid", guid);
+        samplemilktea samplemilktea = new toSample().getsamplemilktea(milkteaMp.selectOne(qw));
         return samplemilktea;
     }
 
     /*
-    * 这个方法只在内部调用，无法通过外部url来触发调用
-    * 根据 guid 返回的 milktea 类
-    * */
+     * 这个方法只在内部调用，无法通过外部url来触发调用
+     * 根据 guid 返回的 milktea 类
+     * */
     @Override
     public milktea getRealMilkTeaByGuid(String guid) {
         Logger logger = LoggerFactory.getLogger(getClass());
-        logger.info("{return milktea} Get request to get the detail infomation of guid : "+guid+" in milktea. Passed");
+        logger.info("{return milktea} Get request to get the detail infomation of guid : " + guid + " in milktea. Passed");
 
         QueryWrapper qw = new QueryWrapper<>();
-        qw.eq("guid",guid);
+        qw.eq("guid", guid);
 
         milktea mk = milkteaMp.selectOne(qw);
 
         return new milktea();
     }
 
+    @Override
+    public List<samplemilktea> getDescSampleTeaList() {
+        Logger logger = LoggerFactory.getLogger(getClass());
+        logger.info("xxx get samplemilktea list");
+
+        QueryWrapper qw = new QueryWrapper<>();
+        qw.orderBy(true ,false,"series","create_date");
+
+        List <milktea> mt = milkteaMp.selectList(qw);
+
+        List list = new ArrayList<>();
+
+        for(milktea tea : mt){
+            list.add(new toSample().getsamplemilktea(tea));
+        }
+        return list;
+    }
 }

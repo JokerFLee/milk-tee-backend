@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import top.jokeme.milktee.dao.milktea;
+import top.jokeme.milktee.dao.milkteadiy;
 import top.jokeme.milktee.entity.samplemilktea;
 import top.jokeme.milktee.service.milktea.*;
 
@@ -37,6 +37,12 @@ public class milkteactl {
     @Autowired
     private delMilkTea delMilkTea;
 
+    @Autowired
+    private getMilkteaCount getMilkteaCount;
+
+    @Autowired
+    private modifyMilkteaDIY modifyMilkteaDIY;
+
     @ResponseBody
     @PostMapping("addmilktea")
     public Integer add_a_milktea(@RequestBody Map map) {
@@ -47,6 +53,18 @@ public class milkteactl {
     @PostMapping("uploadpic")
     public Map<String, String> uploadpicture(@RequestParam("file") MultipartFile file) throws IOException {
         return uploadpic.uploadpicture(file);
+    }
+
+    @ResponseBody
+    @PostMapping("modifymilkteadiyparams")
+    public String modifymtDIY(@RequestBody milkteadiy mtdiy){
+        return modifyMilkteaDIY.modifyMilkteaDIY(mtdiy);
+    }
+
+    @ResponseBody
+    @RequestMapping("getdiytea")
+    public milkteadiy getmilkteadiyinfobyguid(String guid){
+        return modifyMilkteaDIY.getbyguid(guid);
     }
 
     @ResponseBody
@@ -83,5 +101,17 @@ public class milkteactl {
     @RequestMapping("delmilktea")
     public String delmilkteabyguid(String guid) {
         return delMilkTea.delMilkByGuid(guid);
+    }
+
+    @ResponseBody
+    @RequestMapping("getdescmilktealist")
+    public List getsamplemilktealist(){
+        return getmilkteainfo.getDescSampleTeaList();
+    }
+
+    @ResponseBody
+    @RequestMapping("getmilkteacount")
+    public Map getmilkteaCount(){
+        return getMilkteaCount.getMilkteaSeriesCount();
     }
 }
