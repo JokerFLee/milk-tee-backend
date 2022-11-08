@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import top.jokeme.milktee.dao.milkteadiy;
+import top.jokeme.milktee.entity.milkteaPrice;
 import top.jokeme.milktee.entity.samplemilktea;
 import top.jokeme.milktee.service.milktea.*;
 
@@ -42,6 +43,9 @@ public class milkteactl {
 
     @Autowired
     private modifyMilkteaDIY modifyMilkteaDIY;
+
+    @Autowired
+    private countPrice countPrice;
 
     @ResponseBody
     @PostMapping("addmilktea")
@@ -113,5 +117,11 @@ public class milkteactl {
     @RequestMapping("getmilkteacount")
     public Map getmilkteaCount(){
         return getMilkteaCount.getMilkteaSeriesCount();
+    }
+
+    @ResponseBody
+    @PostMapping("getMilkteaPriceCount")
+    public String getMilktePriceCount( @RequestBody milkteaPrice[] list){
+        return countPrice.countMilkteaPrice(list);
     }
 }

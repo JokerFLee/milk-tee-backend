@@ -9,9 +9,9 @@ public class samplemilktea {
 
     String guid;
     String name;
-    float price;
+    double price;
     Byte soldout;
-    float discount;
+    double discount;
     String picurl;
     String intro;
     String tips;
@@ -33,11 +33,11 @@ public class samplemilktea {
         this.name = name;
     }
 
-    public float getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(float price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 
@@ -49,11 +49,11 @@ public class samplemilktea {
         this.soldout = soldout;
     }
 
-    public float getDiscount() {
+    public double getDiscount() {
         return discount;
     }
 
-    public void setDiscount(float discount) {
+    public void setDiscount(double discount) {
         this.discount = discount;
     }
 
