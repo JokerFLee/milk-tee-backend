@@ -1,18 +1,16 @@
 package top.jokeme.milktee.dao;
 
-import com.baomidou.mybatisplus.annotation.TableId;
-
 /**
  * project_name: milk-tee
  * author:       frelon
  * date:         2022/9/19
  **/
 public class orderinfo {
-    @TableId
-    long ouid;
+
+    String ouid;
     String order_detail;
     String order_time;
-    String user;
+    String money;
     byte isdel;
     byte refund;
     String del_time;
@@ -35,11 +33,11 @@ public class orderinfo {
         this.refund_time = refund_time;
     }
 
-    public long getOuid() {
+    public String getOuid() {
         return ouid;
     }
 
-    public void setOuid(long ouid) {
+    public void setOuid(String ouid) {
         this.ouid = ouid;
     }
 
@@ -59,12 +57,12 @@ public class orderinfo {
         this.order_time = order_time;
     }
 
-    public String getUser() {
-        return user;
+    public String getMoney() {
+        return money;
     }
 
-    public void setUser(String user) {
-        this.user = user;
+    public void setMoney(String money) {
+        this.money = money;
     }
 
     public byte getIsdel() {

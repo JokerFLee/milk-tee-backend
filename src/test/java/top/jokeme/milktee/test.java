@@ -1,8 +1,12 @@
 package top.jokeme.milktee;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
 import top.jokeme.milktee.utils.NTime;
 import top.jokeme.milktee.utils.uuid;
+
+import java.util.List;
+import java.util.UUID;
 
 /**
  * project_name: milk-tee
@@ -12,8 +16,10 @@ import top.jokeme.milktee.utils.uuid;
 public class test {
     @Test
     public void ss(){
-        NTime nt = new NTime();
-        uuid uuid = new uuid();
-        System.out.println(nt.getNowTime()+" " +nt.getShortTime()+" "+uuid.shortuuid()+" "+uuid.generateuuid()+" "+uuid.mediumuuid());
+//        NTime nt = new NTime();
+//        uuid uuid = new uuid();
+//        System.out.println(nt.getNowTime()+" " +nt.getShortTime()+" "+uuid.shortuuid()+" "+uuid.generateuuid()+" "+uuid.mediumuuid());
+//        System.out.println(UUID.randomUUID());
+
     }
 }
