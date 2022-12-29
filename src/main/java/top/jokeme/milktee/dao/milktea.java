@@ -1,7 +1,5 @@
 package top.jokeme.milktee.dao;
 
-import com.baomidou.mybatisplus.annotation.TableId;
-
 /**
  * project_name: milk-tee
  * author:       frelon
@@ -11,13 +9,13 @@ public class milktea {
 
     String guid;
     String name;
-    float price;
+    double price;
     String picurl;
     String intro;
     String tips;
     String series;
     String create_date;
-    float discount;
+    double discount;
     byte soldout;
 
     @Override
@@ -52,11 +50,11 @@ public class milktea {
         this.name = name;
     }
 
-    public float getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(float price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 
@@ -100,11 +98,11 @@ public class milktea {
         this.series = series;
     }
 
-    public float getDiscount() {
+    public double getDiscount() {
         return discount;
     }
 
-    public void setDiscount(float discount) {
+    public void setDiscount(double discount) {
         this.discount = discount;
     }
 
@@ -119,7 +117,7 @@ public class milktea {
         if (str.equals("name")) {
             mt.setName(value);
         } else if (str.equals("price")) {
-            mt.setPrice(Float.parseFloat(value));
+            mt.setPrice(Double.parseDouble(value));
         } else if (str.equals("picurl")) {
             mt.setPicurl(value);
         } else if (str.equals("intro")) {
@@ -129,7 +127,7 @@ public class milktea {
         } else if (str.equals("series")) {
             mt.setSeries(value);
         } else if (str.equals("discount")) {
-            mt.setDiscount(Float.parseFloat(value));
+            mt.setDiscount(Double.parseDouble(value));
         } else if (str.equals("soldout")) {
             mt.setSoldout(Byte.parseByte(value));
         }

@@ -1,13 +1,14 @@
 package top.jokeme.milktee.controller;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import top.jokeme.milktee.service.orderinfo.getOrderInfo;
+import top.jokeme.milktee.entity.OrderContent;
+import top.jokeme.milktee.service.orderinfo.getOrderByOuid;
+import top.jokeme.milktee.service.orderinfo.orderGenarate;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * project_name: milk-tee
@@ -18,12 +19,22 @@ import java.util.List;
 @Controller
 @CrossOrigin(origins = "*")
 public class orderinfoctl {
+
     @Autowired
-    private getOrderInfo getOrderInfo;
+    private orderGenarate orderGenarate;
+
+    @Autowired
+    private getOrderByOuid getOrderByOuid;
 
     @ResponseBody
-    @RequestMapping("getorderinfo")
-    public List getOrderInfo(String token) {
-        return getOrderInfo.getOrderInfo(token);
+    @PostMapping("generateorder")
+    public String generateOrder( @RequestBody List<OrderContent> moc){
+        return orderGenarate.orderGenarate(moc);
+    }
+
+    @ResponseBody
+    @RequestMapping("getorderinfobyouid")
+    public Map getOrderInfoByOuid(String ouid){
+        return getOrderByOuid.getOrderInfoByOuid(ouid);
     }
 }

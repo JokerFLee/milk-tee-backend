@@ -11,7 +11,7 @@ import java.util.Date;
 public class NTime {
     public String getNowTime() {
         Date dt = new Date();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SS");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SS");
         return sdf.format(dt);
     }
     public String getShortTime() {

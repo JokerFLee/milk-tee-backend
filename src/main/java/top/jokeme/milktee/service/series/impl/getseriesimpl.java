@@ -53,8 +53,12 @@ public class getseriesimpl implements getseries {
     @Override
     public List getallseries() {
         Logger logger = LoggerFactory.getLogger(getClass());
-        List<series> seriesList = seriesMp.selectList(null);
+        QueryWrapper qw = new QueryWrapper<>();
+
+        qw.orderByDesc("name");
+        List<series> seriesList = seriesMp.selectList(qw);
         logger.info("xxx request for all series list");
+
         return seriesList;
     }
 }

@@ -15,6 +15,6 @@ public interface getmilkteainfo {
     List<samplemilktea> getmilktealist(String token);
     boolean checkExistByName(String name);
     samplemilktea getMilkTeaInfoByGuid(String guid);
+    List<samplemilktea> getDescSampleTeaList();
     milktea getRealMilkTeaByGuid(String guid);
-
 }
