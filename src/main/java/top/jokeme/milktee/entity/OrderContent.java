@@ -1,14 +1,14 @@
 package top.jokeme.milktee.entity;
 
-import java.util.Arrays;
+import java.util.List;
 
 /**
  * project_name: milk-tee
  * author:       frelon
  * date:         2022/11/24
  **/
-public class milkteaOrderContent {
-    orderContentDetail content;
+public class OrderContent {
+    List<String> content;
     double discount;
     String guid;
     String name;
@@ -29,11 +29,11 @@ public class milkteaOrderContent {
                 '}';
     }
 
-    public orderContentDetail getContent() {
+    public List<String> getContent() {
         return content;
     }
 
-    public void setContent(orderContentDetail content) {
+    public void setContent(List<String> content) {
         this.content = content;
     }
 

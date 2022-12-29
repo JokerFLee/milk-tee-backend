@@ -9,4 +9,5 @@ import top.jokeme.milktee.entity.milkteaPrice;
  **/
 public interface countPrice {
     String countMilkteaPrice(milkteaPrice[] list);
+    String countMilkteaPriceWithCheapCode(milkteaPrice[] list,String cheapcode);
 }

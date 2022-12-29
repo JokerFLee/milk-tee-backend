@@ -1,5 +1,6 @@
 package top.jokeme.milktee.service.orderinfo.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
@@ -8,8 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import top.jokeme.milktee.dao.milktea;
 import top.jokeme.milktee.dao.orderinfo;
-import top.jokeme.milktee.entity.milkteaOrderContent;
+import top.jokeme.milktee.entity.OrderContent;
 import top.jokeme.milktee.entity.orderContentDetail;
+import top.jokeme.milktee.mapper.milkteaMp;
 import top.jokeme.milktee.mapper.orderMp;
 import top.jokeme.milktee.service.milktea.getmilkteainfo;
 import top.jokeme.milktee.service.orderinfo.orderGenarate;
@@ -17,7 +19,6 @@ import top.jokeme.milktee.utils.NTime;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -34,27 +35,42 @@ public class orderGenarateImpl implements orderGenarate {
     private orderMp orderMp;
 
     @Autowired
+    private milkteaMp milkteaMp;
+
+    @Autowired
     private getmilkteainfo getmilkteainfo;
 
     @Override
-    public Map orderGenarate(milkteaOrderContent[] moc) {
+    public String orderGenarate(List<OrderContent> moc) {
 
         Logger logger = LoggerFactory.getLogger(getClass());
+
         orderinfo oi = new orderinfo();
 
         oi.setOuid(String.valueOf(UUID.randomUUID()));
 
         List<orderContentDetail> ocd_l = new ArrayList<>();
-        orderContentDetail ocd = new orderContentDetail();
+
         double sumCNY = 0.0;
-        for (milkteaOrderContent moct : moc) {
-            milktea mt = getmilkteainfo.getRealMilkTeaByGuid(moct.getGuid());
+        for (OrderContent moct : moc) {
+
+            orderContentDetail ocd = new orderContentDetail();
+
+            QueryWrapper qw = new QueryWrapper<>();
+            qw.eq("guid",moct.getGuid());
+
+            milktea mt = milkteaMp.selectOne(qw);
+
             double price = mt.getPrice();
             double discount = mt.getDiscount();
             int num = moct.getNum();
-            sumCNY += price*discount*num;
+
+            sumCNY += (price*discount*num);
+
             ocd.setGuid(moct.getGuid());
             ocd.setNum(moct.getNum());
+            ocd.setRemark(moct.getContent());
+            ocd.setName(moct.getName());
             ocd_l.add(ocd);
         }
         ObjectMapper om = new ObjectMapper();
@@ -72,8 +88,10 @@ public class orderGenarateImpl implements orderGenarate {
         oi.setDel_time(null);
         oi.setRefund_time(null);
 
-        orderMp.insert(oi);
-        //写到这里只是完成了数据插入，但是还没有返回数据
-        return null;
+        if (orderMp.insert(oi) == 1){
+            return oi.getOuid();
+        }else{
+            return null;
+        }
     }
 }

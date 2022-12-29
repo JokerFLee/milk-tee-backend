@@ -124,4 +124,10 @@ public class milkteactl {
     public String getMilktePriceCount( @RequestBody milkteaPrice[] list){
         return countPrice.countMilkteaPrice(list);
     }
+
+    @ResponseBody
+    @PostMapping("getMilkteaPriceCountwithcheapcode")
+    public String getMilktePriceCountwithcheapcode( @RequestBody milkteaPrice[] list,String cheapcode){
+        return countPrice.countMilkteaPriceWithCheapCode(list, cheapcode);
+    }
 }

@@ -1,8 +1,8 @@
 package top.jokeme.milktee.service.orderinfo;
 
-import top.jokeme.milktee.entity.milkteaOrderContent;
+import top.jokeme.milktee.entity.OrderContent;
 
-import java.util.Map;
+import java.util.List;
 
 /**
  * project_name: milk-tee
@@ -10,5 +10,5 @@ import java.util.Map;
  * date:         2022/11/24
  **/
 public interface orderGenarate {
-    public Map orderGenarate(milkteaOrderContent[] moc);
+    public String orderGenarate(List<OrderContent> moc);
 }

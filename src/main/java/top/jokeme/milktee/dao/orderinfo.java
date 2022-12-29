@@ -16,6 +16,19 @@ public class orderinfo {
     String del_time;
     String refund_time;
 
+    @Override
+    public String toString() {
+        return "orderinfo{" +
+                "ouid='" + ouid + '\'' +
+                ", order_detail='" + order_detail + '\'' +
+                ", order_time='" + order_time + '\'' +
+                ", money='" + money + '\'' +
+                ", isdel=" + isdel +
+                ", refund=" + refund +
+                ", del_time='" + del_time + '\'' +
+                ", refund_time='" + refund_time + '\'' +
+                '}';
+    }
 
     public String getDel_time() {
         return del_time;
