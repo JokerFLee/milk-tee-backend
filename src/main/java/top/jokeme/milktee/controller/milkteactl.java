@@ -10,6 +10,7 @@ import top.jokeme.milktee.entity.samplemilktea;
 import top.jokeme.milktee.service.milktea.*;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -121,13 +122,13 @@ public class milkteactl {
 
     @ResponseBody
     @PostMapping("getMilkteaPriceCount")
-    public String getMilktePriceCount( @RequestBody milkteaPrice[] list){
+    public HashMap getMilktePriceCount(@RequestBody milkteaPrice[] list){
         return countPrice.countMilkteaPrice(list);
     }
 
     @ResponseBody
     @PostMapping("getMilkteaPriceCountwithcheapcode")
-    public String getMilktePriceCountwithcheapcode( @RequestBody milkteaPrice[] list,String cheapcode){
+    public HashMap getMilktePriceCountwithcheapcode( @RequestBody milkteaPrice[] list,String cheapcode){
         return countPrice.countMilkteaPriceWithCheapCode(list, cheapcode);
     }
 }

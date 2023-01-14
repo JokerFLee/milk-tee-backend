@@ -2,12 +2,14 @@ package top.jokeme.milktee.service.milktea;
 
 import top.jokeme.milktee.entity.milkteaPrice;
 
+import java.util.HashMap;
+
 /**
  * project_name: milk-tee
  * author:       frelon
  * date:         2022/11/8
  **/
 public interface countPrice {
-    String countMilkteaPrice(milkteaPrice[] list);
-    String countMilkteaPriceWithCheapCode(milkteaPrice[] list,String cheapcode);
+    HashMap countMilkteaPrice(milkteaPrice[] list);
+    HashMap countMilkteaPriceWithCheapCode(milkteaPrice[] list,String cheapcode);
 }

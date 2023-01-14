@@ -11,6 +11,9 @@ import top.jokeme.milktee.entity.milkteaPrice;
 import top.jokeme.milktee.mapper.cheapcodeMp;
 import top.jokeme.milktee.mapper.milkteaMp;
 import top.jokeme.milktee.service.milktea.countPrice;
+import top.jokeme.milktee.utils.NTime;
+
+import java.util.HashMap;
 
 
 /**
@@ -20,6 +23,7 @@ import top.jokeme.milktee.service.milktea.countPrice;
  **/
 
 @Service
+@SuppressWarnings("ALL")
 public class countPriceImpl implements countPrice {
 
     @Autowired
@@ -28,12 +32,14 @@ public class countPriceImpl implements countPrice {
     @Autowired
     private cheapcodeMp cheapcodeMp;
 
-    @Override
-    public String countMilkteaPrice(milkteaPrice[] list) {
+    Logger logger = LoggerFactory.getLogger(getClass());
 
-        Logger logger = LoggerFactory.getLogger(getClass());
+    @Override
+    public HashMap countMilkteaPrice(milkteaPrice[] list) {
 
         QueryWrapper<milktea> qw = new QueryWrapper<>();
+        HashMap hm = new HashMap<>();
+        hm.put("timestamp",new NTime().getNowTime());
 
         double sum = 0.0;
         for (milkteaPrice mt : list) {
@@ -45,18 +51,22 @@ public class countPriceImpl implements countPrice {
                 logger.info("name: " + amt.getName() + ",price: " + amt.getPrice() + ",discount: " + amt.getDiscount() +",number:"+mt.getNumber()+",sum price:"+sum);
             } catch (Exception e) {
                 logger.error("querry within error " + e);
-                return "-1";
+                hm.put("status","error");
+                hm.put("data",-1);
+                return hm;
             }
         }
-
-        return String.format("%.2f",sum);
+        hm.put("status","ok");
+        hm.put("data",String.format("%.2f",sum));
+        return hm;
     }
 
     @Override
-    public String countMilkteaPriceWithCheapCode(milkteaPrice[] list, String cheapcode) {
-        Logger logger = LoggerFactory.getLogger(getClass());
-
+    public HashMap countMilkteaPriceWithCheapCode(milkteaPrice[] list, String cheapcode) {
         QueryWrapper<milktea> qw = new QueryWrapper<>();
+        HashMap hm = new HashMap<>();
+        hm.put("timestamp",new NTime().getNowTime());
+
         double sum = 0.0;
         for (milkteaPrice mt : list) {
             qw.clear();
@@ -67,7 +77,9 @@ public class countPriceImpl implements countPrice {
                 logger.info("name: " + amt.getName() + ",price: " + amt.getPrice() + ",discount: " + amt.getDiscount() +",number:"+mt.getNumber()+",sum price:"+sum);
             } catch (Exception e) {
                 logger.error("querry within error " + e);
-                return "-1";
+                hm.put("status","error");
+                hm.put("data",-1);
+                return hm;
             }
         }
 
@@ -78,9 +90,13 @@ public class countPriceImpl implements countPrice {
             n = cheapcodeMp.selectOne(queryWrapper);
         }catch (Exception e){
             logger.error("querry error!"+e);
+            hm.put("msg","此优惠码无效!");
+            hm.put("data",-1);
+            return hm;
         }
         if (n.getUsed() == 1){
             logger.info("cheapcode has already used!");
+            hm.put("msg","优惠码已使用");
         }else{
             if (n.getType() == 0 ){
                 sum -= Double.parseDouble(n.getContent());
@@ -88,7 +104,8 @@ public class countPriceImpl implements countPrice {
                 sum *= Double.parseDouble(n.getContent());
             }
         }
+        hm.put("data",String.format("%.2f",sum));
 
-        return String.format("%.2f",sum);
+        return hm;
     }
 }
