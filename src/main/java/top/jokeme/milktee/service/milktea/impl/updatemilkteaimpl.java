@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import top.jokeme.milktee.dao.milktea;
 import top.jokeme.milktee.entity.samplemilktea;
+import top.jokeme.milktee.entity.toVueJson;
 import top.jokeme.milktee.mapper.milkteaMp;
 import top.jokeme.milktee.service.milktea.getmilkteainfo;
 import top.jokeme.milktee.service.milktea.updatemilktea;
@@ -35,27 +36,39 @@ public class updatemilkteaimpl implements updatemilktea {
      * 就可以了直接 update 整个类的做法更新数据库。
      * */
     @Override
-    public String updatemilkteabuguid(samplemilktea samplemilktea) {
+    public toVueJson updatemilkteabyguid(samplemilktea samplemilktea) {
+        toVueJson<String> tvj = new toVueJson<>("/updatemilktea");
         Logger logger = LoggerFactory.getLogger(getClass());
 
         QueryWrapper qw = new QueryWrapper();
         qw.eq("guid", samplemilktea.getGuid());
 
-        milktea tmp = milkteaMp.selectOne(qw);
-
-        logger.info(samplemilktea.toString());
-
-        milktea mt = new toOriginal().getOriginalMilkTea(samplemilktea);
-        mt.setCreate_date(tmp.getCreate_date());
-
-        Integer x = milkteaMp.update(mt, qw);
-        if (x == 1) {
-            logger.info("Update milktea by guid");
-            return "200 ok";
-        } else {
-            logger.warn("Update milktea error");
+        milktea tmp;
+        milktea mt;
+        try {
+            tmp = milkteaMp.selectOne(qw);
+            logger.info(samplemilktea.toString());
+            mt = new toOriginal().getOriginalMilkTea(samplemilktea);
+            mt.setCreate_date(tmp.getCreate_date());
+            try {
+                Integer x = milkteaMp.update(mt, qw);
+                if (x == 1) {
+                    logger.info("Update milktea by guid");
+                    tvj.oneKeyOk();
+                    return tvj;
+                } else {
+                    logger.warn("Update milktea error");
+                }
+            } catch (Exception e) {
+                logger.error("Mysql update error.Does mysql is running?");
+            }
+        } catch (Exception e) {
+            logger.error("Mysql select all error.Does mysql is running?");
         }
-        return "error";
+        logger.error("update milktea error!");
+        tvj.setErrorStatus(true);
+        tvj.setMsg("服务器内部错误!请联系管理员处理");
+        return tvj;
     }
 
 
@@ -72,22 +85,32 @@ public class updatemilkteaimpl implements updatemilktea {
      * 3.然后就用 update() 方法更新milktea
      * */
     @Override
-    public String updateonecolume(String guid, String colume, String value) {
+    public toVueJson updateonecolume(String guid, String colume, String value) {
 
+        toVueJson tvj = new toVueJson<>("/updteacolumemilktea");
         Logger logger = LoggerFactory.getLogger(getClass());
 
-        milktea mt = getmilkteainfo.getRealMilkTeaByGuid(guid);
 
-        UpdateWrapper<milktea> updateWrapper = new UpdateWrapper<>();
+        try {
+            milktea mt = getmilkteainfo.getRealMilkTeaByGuid(guid);
+            UpdateWrapper<milktea> updateWrapper = new UpdateWrapper<>();
+            updateWrapper.eq("guid", guid).set(colume, value);
 
-        updateWrapper.eq("guid",guid).set(colume,value);
-
-        int x = milkteaMp.update(mt,updateWrapper);
-
-        if (x == 1){
-            logger.info("Update guid :"+guid+ ", colume : "+ colume+ ", value : "+value+". Success!");
-            return "200 ok";
+            try {
+                int x = milkteaMp.update(mt, updateWrapper);
+                if (x == 1) {
+                    logger.info("Update guid :" + guid + ", colume : " + colume + ", value : " + value + ". Success!");
+                    tvj.oneKeyOk();
+                    return tvj;
+                }
+            } catch (Exception e) {
+                logger.error("Mysql update error.Does mysql is running?");
+            }
+        } catch (Exception e) {
+            logger.error("Mysql select one error.Does mysql is running?");
         }
-        return "error";
+        tvj.setErrorStatus(true);
+        tvj.setMsg("服务器内部错误!请联系管理员处理");
+        return tvj;
     }
 }

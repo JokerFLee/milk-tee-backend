@@ -7,6 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 import top.jokeme.milktee.dao.milkteadiy;
 import top.jokeme.milktee.entity.milkteaPrice;
 import top.jokeme.milktee.entity.samplemilktea;
+import top.jokeme.milktee.entity.toVueJson;
 import top.jokeme.milktee.service.milktea.*;
 
 import java.io.IOException;
@@ -22,6 +23,7 @@ import java.util.Map;
 
 @Controller
 @CrossOrigin(origins = "*")
+@SuppressWarnings("ALL")
 public class milkteactl {
 
     @Autowired
@@ -48,87 +50,101 @@ public class milkteactl {
     @Autowired
     private countPrice countPrice;
 
+    // 上传奶茶数据接口 接受map类对象
     @ResponseBody
     @PostMapping("addmilktea")
-    public Integer add_a_milktea(@RequestBody Map map) {
+    public toVueJson add_a_milktea(@RequestBody Map map) {
         return addmilktea.addmilktee(map);
     }
 
+    // 上传图片接口
     @ResponseBody
     @PostMapping("uploadpic")
     public Map<String, String> uploadpicture(@RequestParam("file") MultipartFile file) throws IOException {
         return uploadpic.uploadpicture(file);
     }
 
+    // 修改奶茶口味接口
     @ResponseBody
     @PostMapping("modifymilkteadiyparams")
-    public String modifymtDIY(@RequestBody milkteadiy mtdiy){
+    public toVueJson modifymtDIY(@RequestBody milkteadiy mtdiy){
         return modifyMilkteaDIY.modifyMilkteaDIY(mtdiy);
     }
 
+    // 获取奶茶可以有那些口味
     @ResponseBody
     @RequestMapping("getdiytea")
-    public milkteadiy getmilkteadiyinfobyguid(String guid){
+    public toVueJson getmilkteadiyinfobyguid(String guid){
         return modifyMilkteaDIY.getbyguid(guid);
     }
 
+    // 获取奶茶列表
     @ResponseBody
     @RequestMapping("getmilktealist")
-    public List getallmilktealist(String token) {
+    public toVueJson getallmilktealist(String token) {
         return getmilkteainfo.getmilktealist(token);
     }
 
-
+    // 根据名称检查奶茶是否存在
     @ResponseBody
     @RequestMapping("checkmilkteaexist")
-    public boolean checkMilkteaExistByName(String name) {
+    public toVueJson checkMilkteaExistByName(String name) {
         return getmilkteainfo.checkExistByName(name);
     }
 
+    // 根据guid获取奶茶信息
     @ResponseBody
     @RequestMapping("getmilkteabyid")
-    public samplemilktea getMilkteaDetailInfoByGuid(String guid) {
+    public toVueJson getMilkteaDetailInfoByGuid(String guid) {
         return getmilkteainfo.getMilkTeaInfoByGuid(guid);
     }
 
+    // 更新(整个)奶茶信息
     @ResponseBody
     @PostMapping("updatemilktea")
-    public String updatemilkteabyguid( @RequestBody samplemilktea samplemilktea) {
-        return updatemilktea.updatemilkteabuguid(samplemilktea);
+    public toVueJson updatemilkteabyguid( @RequestBody samplemilktea samplemilktea) {
+        return updatemilktea.updatemilkteabyguid(samplemilktea);
     }
 
+    // 更新(具体某个项)奶茶信息
     @ResponseBody
     @RequestMapping("updteacolumemilktea")
-    public String updateacolumemilkteabyguid(String guid, String colume, String value) {
+    public toVueJson updateacolumemilkteabyguid(String guid, String colume, String value) {
         return updatemilktea.updateonecolume(guid, colume, value);
     }
+
+    // 删除奶茶
     @ResponseBody
     @RequestMapping("delmilktea")
-    public String delmilkteabyguid(String guid) {
+    public toVueJson delmilkteabyguid(String guid) {
         return delMilkTea.delMilkByGuid(guid);
     }
 
+    // 获取排序后的奶茶列表信息
     @ResponseBody
     @RequestMapping("getdescmilktealist")
-    public List getsamplemilktealist(){
+    public toVueJson getsamplemilktealist(){
         return getmilkteainfo.getDescSampleTeaList();
     }
 
+    // 统计某个系列里奶茶数量
     @ResponseBody
     @RequestMapping("getmilkteacount")
-    public Map getmilkteaCount(){
+    public toVueJson getmilkteaCount(){
         return getMilkteaCount.getMilkteaSeriesCount();
     }
 
+    // 计算奶茶价格
     @ResponseBody
     @PostMapping("getMilkteaPriceCount")
-    public HashMap getMilktePriceCount(@RequestBody milkteaPrice[] list){
+    public toVueJson getMilktePriceCount(@RequestBody milkteaPrice[] list){
         return countPrice.countMilkteaPrice(list);
     }
 
+    // 计算使用优惠码后的奶茶价格
     @ResponseBody
     @PostMapping("getMilkteaPriceCountwithcheapcode")
-    public HashMap getMilktePriceCountwithcheapcode( @RequestBody milkteaPrice[] list,String cheapcode){
+    public toVueJson getMilktePriceCountwithcheapcode( @RequestBody milkteaPrice[] list,String cheapcode){
         return countPrice.countMilkteaPriceWithCheapCode(list, cheapcode);
     }
 }

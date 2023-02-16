@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import top.jokeme.milktee.entity.toVueJson;
 import top.jokeme.milktee.mapper.milkteaMp;
 import top.jokeme.milktee.service.milktea.delMilkTea;
 
@@ -23,7 +24,8 @@ public class delMilkTeaImpl implements delMilkTea {
     private milkteaMp milkteaMp;
 
     @Override
-    public String delMilkByGuid(String guid) {
+    public toVueJson delMilkByGuid(String guid) {
+        toVueJson<String> tvj = new toVueJson<>("/delmilktea");
 
         Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -34,13 +36,20 @@ public class delMilkTeaImpl implements delMilkTea {
             logger.info("Will delete the record : "+milkteaMp.selectOne(qw).toString());
         }else{
             logger.warn("Try to delete a not exist record");
-            return "error";
+            tvj.setMsg("删除失败!原因:尝试删除不存在的数据");
+            tvj.setErrorStatus(true);
+            return tvj;
         }
-
-        int x = milkteaMp.delete(qw);
-        if (x == 1){
-            return "200 ok";
+        try {
+            milkteaMp.delete(qw);
+            logger.info("Delete record success!");
+            tvj.setMsg("删除成功!");
+            tvj.setErrorStatus(false);
+        }catch (Exception e){
+            logger.error("Delete record error!");
+            tvj.setMsg("删除失败!");
+            tvj.setErrorStatus(true);
         }
-        return "error";
+        return tvj;
     }
 }

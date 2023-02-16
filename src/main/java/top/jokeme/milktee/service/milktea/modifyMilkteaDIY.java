@@ -1,6 +1,7 @@
 package top.jokeme.milktee.service.milktea;
 
 import top.jokeme.milktee.dao.milkteadiy;
+import top.jokeme.milktee.entity.toVueJson;
 
 /**
  * project_name: milk-tee
@@ -8,6 +9,6 @@ import top.jokeme.milktee.dao.milkteadiy;
  * date:         2022/10/27
  **/
 public interface modifyMilkteaDIY {
-    String modifyMilkteaDIY(milkteadiy mtdiy);
-    milkteadiy getbyguid(String guid);
+    toVueJson modifyMilkteaDIY(milkteadiy mtdiy);
+    toVueJson getbyguid(String guid);
 }

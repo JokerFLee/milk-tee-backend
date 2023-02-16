@@ -8,8 +8,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import top.jokeme.milktee.dao.milkteadiy;
+import top.jokeme.milktee.entity.toVueJson;
 import top.jokeme.milktee.mapper.milkteadiyMp;
 import top.jokeme.milktee.service.milktea.modifyMilkteaDIY;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * project_name: milk-tee
@@ -24,39 +28,72 @@ public class modifyMilkteaDIYimpl implements modifyMilkteaDIY {
     @Autowired
     private milkteadiyMp milkteadiyMp;
 
+    /**
+     * 更新奶茶口味的接口,当检测到存在就更新,没有就创建
+     */
     @Override
-    public String modifyMilkteaDIY(milkteadiy mtdiy) {
+    public toVueJson modifyMilkteaDIY(milkteadiy mtdiy) {
+        toVueJson tvj = new toVueJson<>("modifymilkteadiyparams");
         Logger logger = LoggerFactory.getLogger(getClass());
 
         logger.info(mtdiy.toString());
 
-        QueryWrapper qw = new QueryWrapper<>();
-        qw.eq("guid",mtdiy.getGuid());
-        String result = "200 ok";
-        if (milkteadiyMp.exists(qw)){
-//            exist -> modify
-            UpdateWrapper updateWrapper = new UpdateWrapper<>();
-            updateWrapper.eq("guid",mtdiy.getGuid());
-            if ( (milkteadiyMp.update(mtdiy,updateWrapper)) != 1 ){
-                result = "error";
-                logger.error("update diy milktea info error");
+        QueryWrapper qw = new QueryWrapper<>().eq("guid", mtdiy.getGuid());
+
+        try {
+            boolean x = milkteadiyMp.exists(qw);
+            UpdateWrapper updateWrapper = new UpdateWrapper<>().eq("guid", mtdiy.getGuid());
+            if (x == true) {
+                try {
+                    // exist -> modify
+                    int n = milkteadiyMp.update(mtdiy, updateWrapper);
+                    if (n == 1) {
+                        tvj.oneKeyOk();
+                        logger.info("update diy milktea info success");
+                        return tvj;
+                    }
+                } catch (Exception e) {
+                    logger.error("Mysql update error.Does mysql is running?");
+                }
+            } else {
+                // not exist -> create it
+                try {
+                    if (milkteadiyMp.insert(mtdiy) == 1) {
+                        logger.info("Try to update the not existed record, created it success! ");
+                        tvj.oneKeyOk();
+                        return tvj;
+                    }
+                } catch (Exception e) {
+                    logger.error("Try to update the not existed record, created it error!");
+                }
+
             }
-        }else {
-//            not exist -> create it
-            if((milkteadiyMp.insert(mtdiy) != 1)) {
-                result = "error";
-                logger.error("create diy milktea info error!");
-            }
+        } catch (Exception e) {
+            logger.error("Mysql querry exist error.Does mysql is running?");
         }
-        return result;
+
+        tvj.setErrorStatus(true);
+        tvj.setMsg("更新数据出错!");
+        return tvj;
     }
 
     @Override
-    public milkteadiy getbyguid(String guid) {
+    public toVueJson getbyguid(String guid) {
+        toVueJson<milkteadiy> tvj = new toVueJson<>("/getdiytea");
         Logger logger = LoggerFactory.getLogger(getClass());
-        logger.info("get milktea diy info by guid "+ guid);
-        QueryWrapper qw = new QueryWrapper<>();
-        qw.eq("guid",guid);
-        return milkteadiyMp.selectOne(qw);
+        logger.info("get milktea diy info by guid " + guid);
+        QueryWrapper qw = new QueryWrapper<>().eq("guid", guid);
+        try {
+            List<milkteadiy> list = new ArrayList<>();
+            list.add(milkteadiyMp.selectOne(qw));
+            tvj.oneKeyOk();
+            tvj.setDataList(list);
+            logger.info("Querry DIY info success!!");
+        } catch (Exception e) {
+            logger.error("Mysql select one error.Does mysql is running?");
+            tvj.setErrorStatus(true);
+            tvj.setMsg("服务器内部错误!请联系管理员处理");
+        }
+        return tvj;
     }
 }

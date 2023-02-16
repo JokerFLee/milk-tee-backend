@@ -6,10 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import top.jokeme.milktee.dao.milktea;
 import top.jokeme.milktee.dao.series;
+import top.jokeme.milktee.entity.toVueJson;
 import top.jokeme.milktee.mapper.milkteaMp;
 import top.jokeme.milktee.mapper.seriesMp;
 import top.jokeme.milktee.service.milktea.getMilkteaCount;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,22 +32,38 @@ public class getMilkteaCountimpl implements getMilkteaCount {
     private milkteaMp milkteaMp;
 
     @Override
-    public Map getMilkteaSeriesCount() {
+    public toVueJson getMilkteaSeriesCount() {
+
+        toVueJson<Map> tvj = new toVueJson("/getmilkteacount");
         Logger logger = LoggerFactory.getLogger(getClass());
 
-        List<series> x = seriesMp.selectList(null);
-        List<milktea> y = milkteaMp.selectList(null);
+        List<series> x = null;
+        List<milktea> y = null;
 
-        Map<String,Integer> map = new HashMap<>();
-
-        for (series se:x){
-            map.put(se.getName(),0);
+        try {
+            seriesMp.selectList(null);
+            milkteaMp.selectList(null);
+        } catch (Exception e) {
+            logger.error("Mysql select all error.Does mysql is running?");
+            tvj.setErrorStatus(true);
+            tvj.setMsg("服务器内部错误!请联系管理员处理");
         }
-        for (milktea mt : y){
+
+
+        Map<String, Integer> map = new HashMap<>();
+
+        for (series se : x) {
+            map.put(se.getName(), 0);
+        }
+        for (milktea mt : y) {
             int tmp = map.get(mt.getSeries());
-            tmp+=1;
-            map.put(mt.getSeries(),tmp);
+            tmp += 1;
+            map.put(mt.getSeries(), tmp);
         }
-        return map;
+        List<Map> list = new ArrayList<>();
+        list.add(map);
+        tvj.oneKeyOk();
+        tvj.setDataList(list);
+        return tvj;
     }
 }

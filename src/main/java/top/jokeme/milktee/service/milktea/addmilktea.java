@@ -1,5 +1,7 @@
 package top.jokeme.milktee.service.milktea;
 
+import top.jokeme.milktee.entity.toVueJson;
+
 import java.util.Map;
 
 /**
@@ -8,5 +10,5 @@ import java.util.Map;
  * date:         2022/9/19
  **/
 public interface addmilktea {
-    Integer addmilktee(Map<String,String> map);
+    toVueJson addmilktee(Map<String,String> map);
 }

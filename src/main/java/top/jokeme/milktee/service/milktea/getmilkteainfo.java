@@ -2,6 +2,7 @@ package top.jokeme.milktee.service.milktea;
 
 import top.jokeme.milktee.dao.milktea;
 import top.jokeme.milktee.entity.samplemilktea;
+import top.jokeme.milktee.entity.toVueJson;
 
 
 import java.util.List;
@@ -12,9 +13,9 @@ import java.util.List;
  * date:         2022/9/30
  **/
 public interface getmilkteainfo {
-    List<samplemilktea> getmilktealist(String token);
-    boolean checkExistByName(String name);
-    samplemilktea getMilkTeaInfoByGuid(String guid);
-    List<samplemilktea> getDescSampleTeaList();
+    toVueJson getmilktealist(String token);
+    toVueJson checkExistByName(String name);
+    toVueJson getMilkTeaInfoByGuid(String guid);
+    toVueJson getDescSampleTeaList();
     milktea getRealMilkTeaByGuid(String guid);
 }

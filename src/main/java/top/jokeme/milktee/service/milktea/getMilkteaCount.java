@@ -1,5 +1,7 @@
 package top.jokeme.milktee.service.milktea;
 
+import top.jokeme.milktee.entity.toVueJson;
+
 import java.util.List;
 import java.util.Map;
 
@@ -9,5 +11,5 @@ import java.util.Map;
  * date:         2022/10/5
  **/
 public interface getMilkteaCount {
-    Map getMilkteaSeriesCount();
+    toVueJson getMilkteaSeriesCount();
 }

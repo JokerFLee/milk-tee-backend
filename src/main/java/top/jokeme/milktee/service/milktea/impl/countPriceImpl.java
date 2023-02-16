@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import top.jokeme.milktee.dao.cheapcode;
 import top.jokeme.milktee.dao.milktea;
 import top.jokeme.milktee.entity.milkteaPrice;
+import top.jokeme.milktee.entity.toVueJson;
 import top.jokeme.milktee.mapper.cheapcodeMp;
 import top.jokeme.milktee.mapper.milkteaMp;
 import top.jokeme.milktee.service.milktea.countPrice;
@@ -34,13 +35,11 @@ public class countPriceImpl implements countPrice {
 
     Logger logger = LoggerFactory.getLogger(getClass());
 
+    toVueJson tvj = new toVueJson<String>("/getMilkteaPriceCount");
+
     @Override
-    public HashMap countMilkteaPrice(milkteaPrice[] list) {
-
+    public toVueJson countMilkteaPrice(milkteaPrice[] list) {
         QueryWrapper<milktea> qw = new QueryWrapper<>();
-        HashMap hm = new HashMap<>();
-        hm.put("timestamp",new NTime().getNowTime());
-
         double sum = 0.0;
         for (milkteaPrice mt : list) {
             qw.clear();
@@ -48,24 +47,22 @@ public class countPriceImpl implements countPrice {
             try {
                 milktea amt = milkteaMp.selectOne(qw);
                 sum += amt.getPrice() * amt.getDiscount() * mt.getNumber();
-                logger.info("name: " + amt.getName() + ",price: " + amt.getPrice() + ",discount: " + amt.getDiscount() +",number:"+mt.getNumber()+",sum price:"+sum);
+                tvj.oneKeyOk();
+                tvj.setSingleDate(String.format("%.2f", sum));
+                logger.info("name: " + amt.getName() + ",price: " + amt.getPrice() + ",discount: " + amt.getDiscount() + ",number:" + mt.getNumber() + ",sum price:" + sum);
             } catch (Exception e) {
                 logger.error("querry within error " + e);
-                hm.put("status","error");
-                hm.put("data",-1);
-                return hm;
+                tvj.setErrorStatus(true);
+                tvj.setMsg("查询出错!");
             }
         }
-        hm.put("status","ok");
-        hm.put("data",String.format("%.2f",sum));
-        return hm;
+        return tvj;
     }
 
     @Override
-    public HashMap countMilkteaPriceWithCheapCode(milkteaPrice[] list, String cheapcode) {
+    public toVueJson countMilkteaPriceWithCheapCode(milkteaPrice[] list, String cheapcode) {
         QueryWrapper<milktea> qw = new QueryWrapper<>();
-        HashMap hm = new HashMap<>();
-        hm.put("timestamp",new NTime().getNowTime());
+
 
         double sum = 0.0;
         for (milkteaPrice mt : list) {
@@ -74,38 +71,40 @@ public class countPriceImpl implements countPrice {
             try {
                 milktea amt = milkteaMp.selectOne(qw);
                 sum += amt.getPrice() * amt.getDiscount() * mt.getNumber();
-                logger.info("name: " + amt.getName() + ",price: " + amt.getPrice() + ",discount: " + amt.getDiscount() +",number:"+mt.getNumber()+",sum price:"+sum);
+                logger.info("name: " + amt.getName() + ",price: " + amt.getPrice() + ",discount: " + amt.getDiscount() + ",number:" + mt.getNumber() + ",sum price:" + sum);
             } catch (Exception e) {
                 logger.error("querry within error " + e);
-                hm.put("status","error");
-                hm.put("data",-1);
-                return hm;
+                tvj.setMsg("查询出错!");
+                tvj.setErrorStatus(true);
+                return tvj;
             }
         }
 
         QueryWrapper<cheapcode> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("code",cheapcode);
+        queryWrapper.eq("code", cheapcode);
         cheapcode n = null;
         try {
             n = cheapcodeMp.selectOne(queryWrapper);
-        }catch (Exception e){
-            logger.error("querry error!"+e);
-            hm.put("msg","此优惠码无效!");
-            hm.put("data",-1);
-            return hm;
+        } catch (Exception e) {
+            logger.error("querry error!" + e);
+            tvj.setMsg("此优惠码无效!");
+            tvj.setErrorStatus(true);
+            return tvj;
         }
-        if (n.getUsed() == 1){
+        if (n.getUsed() == 1) {
             logger.info("cheapcode has already used!");
-            hm.put("msg","优惠码已使用");
-        }else{
-            if (n.getType() == 0 ){
+            tvj.setMsg("优惠码已使用");
+            tvj.setErrorStatus(true);
+            return tvj;
+        } else {
+            if (n.getType() == 0) {
                 sum -= Double.parseDouble(n.getContent());
-            }else if (n.getType() == 1){
+            } else if (n.getType() == 1) {
                 sum *= Double.parseDouble(n.getContent());
             }
         }
-        hm.put("data",String.format("%.2f",sum));
-
-        return hm;
+        tvj.oneKeyOk();
+        tvj.setSingleDate(String.format("%.2f", sum));
+        return tvj;
     }
 }
