@@ -2,28 +2,29 @@ package top.jokeme.milktee.entity;
 
 import java.util.List;
 
-public class toVueJson<T> {
-    public toVueJson() {
+public class toVueSingleData<T> {
+
+    public toVueSingleData() {
     }
-    public toVueJson(String location) {
+
+    public toVueSingleData(String location) {
         this.location = location;
     }
 
     // 哪一个接口
     String location;
+
     // 函数执行是否出错
     boolean errorStatus;
+
     // 返回给前端的提示信息
     String msg;
 
     // 返回给前端的单个数据
     T singleDate;
 
-    // 返回给前端的数据
-    List<T> dataList;
-
-    public void oneKeyOk(){
-        this.msg= "200 ok";
+    public void oneKeyOk() {
+        this.msg = "200 ok";
         this.errorStatus = false;
     }
 
@@ -43,7 +44,26 @@ public class toVueJson<T> {
         this.singleDate = singleDate;
     }
 
-    public void setDataList(List<T> dataList) {
-        this.dataList = dataList;
+    public String getLocation() {
+        return location;
+    }
+
+    public boolean isErrorStatus() {
+        return errorStatus;
+    }
+
+    public String getMsg() {
+        return msg;
+    }
+
+    public T getSingleDate() {
+        return singleDate;
+    }
+
+    @Override
+    public String toString() {
+        return "toVueSingleData{" + "location='" + location + '\'' + ", errorStatus=" + errorStatus + ", msg='" + msg + '\'' + ", singleDate=" + singleDate + '}';
     }
 }
+
+

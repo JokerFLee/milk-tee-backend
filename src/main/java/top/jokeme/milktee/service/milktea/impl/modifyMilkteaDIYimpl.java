@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import top.jokeme.milktee.dao.milkteadiy;
-import top.jokeme.milktee.entity.toVueJson;
+import top.jokeme.milktee.entity.toVueMultiData;
 import top.jokeme.milktee.mapper.milkteadiyMp;
 import top.jokeme.milktee.service.milktea.modifyMilkteaDIY;
 
@@ -32,8 +32,8 @@ public class modifyMilkteaDIYimpl implements modifyMilkteaDIY {
      * 更新奶茶口味的接口,当检测到存在就更新,没有就创建
      */
     @Override
-    public toVueJson modifyMilkteaDIY(milkteadiy mtdiy) {
-        toVueJson tvj = new toVueJson<>("modifymilkteadiyparams");
+    public toVueMultiData modifyMilkteaDIY(milkteadiy mtdiy) {
+        toVueMultiData tvj = new toVueMultiData<>("modifymilkteadiyparams");
         Logger logger = LoggerFactory.getLogger(getClass());
 
         logger.info(mtdiy.toString());
@@ -78,8 +78,8 @@ public class modifyMilkteaDIYimpl implements modifyMilkteaDIY {
     }
 
     @Override
-    public toVueJson getbyguid(String guid) {
-        toVueJson<milkteadiy> tvj = new toVueJson<>("/getdiytea");
+    public toVueMultiData getbyguid(String guid) {
+        toVueMultiData<milkteadiy> tvj = new toVueMultiData<>("/getdiytea");
         Logger logger = LoggerFactory.getLogger(getClass());
         logger.info("get milktea diy info by guid " + guid);
         QueryWrapper qw = new QueryWrapper<>().eq("guid", guid);

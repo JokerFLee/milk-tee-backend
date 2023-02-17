@@ -1,6 +1,6 @@
 package top.jokeme.milktee.service.milktea;
 
-import top.jokeme.milktee.entity.toVueJson;
+import top.jokeme.milktee.entity.toVueMultiData;
 
 /**
  * project_name: milk-tee
@@ -8,5 +8,5 @@ import top.jokeme.milktee.entity.toVueJson;
  * date:         2022/10/2
  **/
 public interface delMilkTea {
-    toVueJson delMilkByGuid(String guid);
+    toVueMultiData delMilkByGuid(String guid);
 }

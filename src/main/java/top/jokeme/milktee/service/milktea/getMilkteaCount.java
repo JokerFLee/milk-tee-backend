@@ -1,9 +1,6 @@
 package top.jokeme.milktee.service.milktea;
 
-import top.jokeme.milktee.entity.toVueJson;
-
-import java.util.List;
-import java.util.Map;
+import top.jokeme.milktee.entity.toVueMultiData;
 
 /**
  * project_name: milk-tee
@@ -11,5 +8,5 @@ import java.util.Map;
  * date:         2022/10/5
  **/
 public interface getMilkteaCount {
-    toVueJson getMilkteaSeriesCount();
+    toVueMultiData getMilkteaSeriesCount();
 }

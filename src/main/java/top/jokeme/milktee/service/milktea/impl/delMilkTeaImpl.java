@@ -5,7 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import top.jokeme.milktee.entity.toVueJson;
+import top.jokeme.milktee.entity.toVueMultiData;
 import top.jokeme.milktee.mapper.milkteaMp;
 import top.jokeme.milktee.service.milktea.delMilkTea;
 
@@ -24,8 +24,8 @@ public class delMilkTeaImpl implements delMilkTea {
     private milkteaMp milkteaMp;
 
     @Override
-    public toVueJson delMilkByGuid(String guid) {
-        toVueJson<String> tvj = new toVueJson<>("/delmilktea");
+    public toVueMultiData delMilkByGuid(String guid) {
+        toVueMultiData<String> tvj = new toVueMultiData<>("/delmilktea");
 
         Logger logger = LoggerFactory.getLogger(getClass());
 

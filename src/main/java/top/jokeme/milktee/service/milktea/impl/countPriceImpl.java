@@ -8,13 +8,11 @@ import org.springframework.stereotype.Service;
 import top.jokeme.milktee.dao.cheapcode;
 import top.jokeme.milktee.dao.milktea;
 import top.jokeme.milktee.entity.milkteaPrice;
-import top.jokeme.milktee.entity.toVueJson;
+import top.jokeme.milktee.entity.toVueMultiData;
+import top.jokeme.milktee.entity.toVueSingleData;
 import top.jokeme.milktee.mapper.cheapcodeMp;
 import top.jokeme.milktee.mapper.milkteaMp;
 import top.jokeme.milktee.service.milktea.countPrice;
-import top.jokeme.milktee.utils.NTime;
-
-import java.util.HashMap;
 
 
 /**
@@ -35,10 +33,9 @@ public class countPriceImpl implements countPrice {
 
     Logger logger = LoggerFactory.getLogger(getClass());
 
-    toVueJson tvj = new toVueJson<String>("/getMilkteaPriceCount");
-
     @Override
-    public toVueJson countMilkteaPrice(milkteaPrice[] list) {
+    public toVueSingleData countMilkteaPrice(milkteaPrice[] list) {
+        toVueSingleData<String> tvj = new toVueSingleData("/getMilkteaPriceCount");
         QueryWrapper<milktea> qw = new QueryWrapper<>();
         double sum = 0.0;
         for (milkteaPrice mt : list) {
@@ -54,13 +51,17 @@ public class countPriceImpl implements countPrice {
                 logger.error("querry within error " + e);
                 tvj.setErrorStatus(true);
                 tvj.setMsg("查询出错!");
+                tvj.setSingleDate(null);
             }
         }
         return tvj;
     }
 
     @Override
-    public toVueJson countMilkteaPriceWithCheapCode(milkteaPrice[] list, String cheapcode) {
+    public toVueSingleData countMilkteaPriceWithCheapCode(milkteaPrice[] list, String cheapcode) {
+
+        toVueSingleData<String> tvj = new toVueSingleData<>("/getMilkteaPriceCountwithcheapcode");
+
         QueryWrapper<milktea> qw = new QueryWrapper<>();
 
 

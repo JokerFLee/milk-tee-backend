@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import top.jokeme.milktee.dao.milktea;
 import top.jokeme.milktee.dao.series;
-import top.jokeme.milktee.entity.toVueJson;
+import top.jokeme.milktee.entity.toVueMultiData;
 import top.jokeme.milktee.mapper.milkteaMp;
 import top.jokeme.milktee.mapper.seriesMp;
 import top.jokeme.milktee.service.milktea.getMilkteaCount;
@@ -32,9 +32,9 @@ public class getMilkteaCountimpl implements getMilkteaCount {
     private milkteaMp milkteaMp;
 
     @Override
-    public toVueJson getMilkteaSeriesCount() {
+    public toVueMultiData getMilkteaSeriesCount() {
 
-        toVueJson<Map> tvj = new toVueJson("/getmilkteacount");
+        toVueMultiData<Map> tvj = new toVueMultiData("/getmilkteacount");
         Logger logger = LoggerFactory.getLogger(getClass());
 
         List<series> x = null;

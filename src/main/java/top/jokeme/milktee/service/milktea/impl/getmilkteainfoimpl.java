@@ -7,7 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import top.jokeme.milktee.dao.milktea;
 import top.jokeme.milktee.entity.samplemilktea;
-import top.jokeme.milktee.entity.toVueJson;
+import top.jokeme.milktee.entity.toVueMultiData;
+import top.jokeme.milktee.entity.toVueSingleData;
 import top.jokeme.milktee.mapper.milkteaMp;
 import top.jokeme.milktee.service.milktea.getmilkteainfo;
 import top.jokeme.milktee.utils.toSample;
@@ -34,8 +35,8 @@ public class getmilkteainfoimpl implements getmilkteainfo {
      * 然后返回给前端。
      * */
     @Override
-    public toVueJson getmilktealist(String token) {
-        toVueJson<samplemilktea> tvj = new toVueJson<>("/getmilktealist");
+    public toVueMultiData getmilktealist() {
+        toVueMultiData<samplemilktea> tvj = new toVueMultiData<>("/getmilktealist");
         Logger logger = LoggerFactory.getLogger(getClass());
 
         QueryWrapper qw = new QueryWrapper<>();
@@ -57,6 +58,7 @@ public class getmilkteainfoimpl implements getmilkteainfo {
         logger.info("request for all Milktea list");
         tvj.oneKeyOk();
         tvj.setDataList(filist);
+        logger.info(tvj.toString());
         return tvj;
     }
 
@@ -64,8 +66,8 @@ public class getmilkteainfoimpl implements getmilkteainfo {
      * 接口给前端调用的，所以检查名字是否已经存在
      * */
     @Override
-    public toVueJson checkExistByName(String name) {
-        toVueJson<Boolean> tvj = new toVueJson<>("/checkmilkteaexist");
+    public toVueSingleData<Boolean> checkExistByName(String name) {
+        toVueSingleData<Boolean> tvj = new toVueSingleData<>("/checkmilkteaexist");
         Logger logger = LoggerFactory.getLogger(getClass());
 
         logger.info("Get request for check the name : " + name + " is exist in milktea. Passed");
@@ -74,11 +76,12 @@ public class getmilkteainfoimpl implements getmilkteainfo {
         try{
             ex = milkteaMp.exists(qw);
             tvj.oneKeyOk();
-            tvj.setSingleDate(ex);
+            tvj.setSingleDate(true);
         }catch (Exception e){
             logger.error("Mysql querry exist error.Does mysql is running?");
             tvj.setErrorStatus(true);
             tvj.setMsg("服务器内部错误!请联系管理员处理!");
+            tvj.setSingleDate(false);
         }
         return tvj;
     }
@@ -88,10 +91,10 @@ public class getmilkteainfoimpl implements getmilkteainfo {
      * 也返回 samplemilktea类型
      * */
     @Override
-    public toVueJson getMilkTeaInfoByGuid(String guid) {
+    public toVueMultiData getMilkTeaInfoByGuid(String guid) {
 
         Logger logger = LoggerFactory.getLogger(getClass());
-        toVueJson<samplemilktea> tvj = new toVueJson<>("/getmilkteabyid");
+        toVueMultiData<samplemilktea> tvj = new toVueMultiData<>("/getmilkteabyid");
 
         logger.info("{return samplemilktea} Get request to get the detail infomation of guid : " + guid + " in milktea. Passed");
         QueryWrapper qw = new QueryWrapper<>().eq("guid", guid);
@@ -135,8 +138,8 @@ public class getmilkteainfoimpl implements getmilkteainfo {
     }
 
     @Override
-    public toVueJson<samplemilktea> getDescSampleTeaList() {
-        toVueJson<samplemilktea> tvj = new toVueJson<>("/getdescmilktealist");
+    public toVueMultiData<samplemilktea> getDescSampleTeaList() {
+        toVueMultiData<samplemilktea> tvj = new toVueMultiData<>("/getdescmilktealist");
 
         Logger logger = LoggerFactory.getLogger(getClass());
         logger.info("xxx get samplemilktea list");

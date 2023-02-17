@@ -1,11 +1,8 @@
 package top.jokeme.milktee.service.milktea;
 
 import top.jokeme.milktee.dao.milktea;
-import top.jokeme.milktee.entity.samplemilktea;
-import top.jokeme.milktee.entity.toVueJson;
-
-
-import java.util.List;
+import top.jokeme.milktee.entity.toVueMultiData;
+import top.jokeme.milktee.entity.toVueSingleData;
 
 /**
  * project_name: milk-tee
@@ -13,9 +10,9 @@ import java.util.List;
  * date:         2022/9/30
  **/
 public interface getmilkteainfo {
-    toVueJson getmilktealist(String token);
-    toVueJson checkExistByName(String name);
-    toVueJson getMilkTeaInfoByGuid(String guid);
-    toVueJson getDescSampleTeaList();
+    toVueMultiData getmilktealist();
+    toVueSingleData checkExistByName(String name);
+    toVueMultiData getMilkTeaInfoByGuid(String guid);
+    toVueMultiData getDescSampleTeaList();
     milktea getRealMilkTeaByGuid(String guid);
 }

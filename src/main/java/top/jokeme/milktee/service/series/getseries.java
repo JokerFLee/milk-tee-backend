@@ -1,5 +1,8 @@
 package top.jokeme.milktee.service.series;
 
+import top.jokeme.milktee.entity.toVueMultiData;
+import top.jokeme.milktee.entity.toVueSingleData;
+
 import java.util.List;
 
 /**
@@ -10,5 +13,5 @@ import java.util.List;
 public interface getseries {
     boolean getseriesbyname(String name);
     boolean getseriesbyuuid(Integer uuid);
-    List getallseries();
+    toVueMultiData getallseries();
 }

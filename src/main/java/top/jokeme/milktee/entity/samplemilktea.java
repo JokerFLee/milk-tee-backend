@@ -1,5 +1,7 @@
 package top.jokeme.milktee.entity;
 
+import java.util.List;
+
 /**
  * project_name: milk-tee
  * author:       frelon

@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import top.jokeme.milktee.dao.milktea;
 import top.jokeme.milktee.entity.samplemilktea;
-import top.jokeme.milktee.entity.toVueJson;
+import top.jokeme.milktee.entity.toVueMultiData;
 import top.jokeme.milktee.mapper.milkteaMp;
 import top.jokeme.milktee.service.milktea.getmilkteainfo;
 import top.jokeme.milktee.service.milktea.updatemilktea;
@@ -36,8 +36,8 @@ public class updatemilkteaimpl implements updatemilktea {
      * 就可以了直接 update 整个类的做法更新数据库。
      * */
     @Override
-    public toVueJson updatemilkteabyguid(samplemilktea samplemilktea) {
-        toVueJson<String> tvj = new toVueJson<>("/updatemilktea");
+    public toVueMultiData updatemilkteabyguid(samplemilktea samplemilktea) {
+        toVueMultiData<String> tvj = new toVueMultiData<>("/updatemilktea");
         Logger logger = LoggerFactory.getLogger(getClass());
 
         QueryWrapper qw = new QueryWrapper();
@@ -85,9 +85,9 @@ public class updatemilkteaimpl implements updatemilktea {
      * 3.然后就用 update() 方法更新milktea
      * */
     @Override
-    public toVueJson updateonecolume(String guid, String colume, String value) {
+    public toVueMultiData updateonecolume(String guid, String colume, String value) {
 
-        toVueJson tvj = new toVueJson<>("/updteacolumemilktea");
+        toVueMultiData tvj = new toVueMultiData<>("/updteacolumemilktea");
         Logger logger = LoggerFactory.getLogger(getClass());
 
 

@@ -1,7 +1,7 @@
 package top.jokeme.milktee.service.milktea;
 
 import top.jokeme.milktee.entity.samplemilktea;
-import top.jokeme.milktee.entity.toVueJson;
+import top.jokeme.milktee.entity.toVueMultiData;
 
 /**
  * project_name: milk-tee
@@ -9,7 +9,7 @@ import top.jokeme.milktee.entity.toVueJson;
  * date:         2022/10/1
  **/
 public interface updatemilktea {
-    toVueJson updatemilkteabyguid(samplemilktea samplemilktea);
+    toVueMultiData updatemilkteabyguid(samplemilktea samplemilktea);
 
-    toVueJson updateonecolume(String guid,String colume,String value);
+    toVueMultiData updateonecolume(String guid, String colume, String value);
 }

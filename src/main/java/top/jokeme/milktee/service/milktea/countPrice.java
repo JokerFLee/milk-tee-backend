@@ -1,9 +1,8 @@
 package top.jokeme.milktee.service.milktea;
 
 import top.jokeme.milktee.entity.milkteaPrice;
-import top.jokeme.milktee.entity.toVueJson;
-
-import java.util.HashMap;
+import top.jokeme.milktee.entity.toVueMultiData;
+import top.jokeme.milktee.entity.toVueSingleData;
 
 /**
  * project_name: milk-tee
@@ -11,6 +10,6 @@ import java.util.HashMap;
  * date:         2022/11/8
  **/
 public interface countPrice {
-    toVueJson countMilkteaPrice(milkteaPrice[] list);
-    toVueJson countMilkteaPriceWithCheapCode(milkteaPrice[] list,String cheapcode);
+    toVueSingleData countMilkteaPrice(milkteaPrice[] list);
+    toVueSingleData countMilkteaPriceWithCheapCode(milkteaPrice[] list, String cheapcode);
 }
