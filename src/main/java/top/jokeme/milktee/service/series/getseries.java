@@ -1,9 +1,6 @@
 package top.jokeme.milktee.service.series;
 
-import top.jokeme.milktee.entity.toVueMultiData;
-import top.jokeme.milktee.entity.toVueSingleData;
-
-import java.util.List;
+import top.jokeme.milktee.entity.general.toVueMultiData;
 
 /**
  * project_name: milk-tee

@@ -1,6 +1,6 @@
 package top.jokeme.milktee.service.milktea;
 
-import top.jokeme.milktee.entity.toVueMultiData;
+import top.jokeme.milktee.entity.general.toVueMultiData;
 
 /**
  * project_name: milk-tee

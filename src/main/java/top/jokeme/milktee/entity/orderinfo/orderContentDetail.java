@@ -1,4 +1,4 @@
-package top.jokeme.milktee.entity;
+package top.jokeme.milktee.entity.orderinfo;
 
 import java.util.List;
 

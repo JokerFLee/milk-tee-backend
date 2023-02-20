@@ -5,6 +5,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import top.jokeme.milktee.dao.milkteadiy;
 import top.jokeme.milktee.entity.*;
+import top.jokeme.milktee.entity.general.toVueMultiData;
+import top.jokeme.milktee.entity.general.toVueSingleData;
+import top.jokeme.milktee.entity.milktea.milkteaMini;
+import top.jokeme.milktee.entity.milktea.milkteaPrice;
 import top.jokeme.milktee.service.milktea.*;
 
 import java.io.IOException;
@@ -99,13 +103,6 @@ public class milkteactl {
     @PostMapping("updatemilktea")
     public toVueMultiData updatemilkteabyguid(@RequestBody samplemilktea samplemilktea) {
         return updatemilktea.updatemilkteabyguid(samplemilktea);
-    }
-
-    // 更新(具体某个项)奶茶信息
-    @ResponseBody
-    @RequestMapping("updteacolumemilktea")
-    public toVueMultiData updateacolumemilkteabyguid(String guid, String colume, String value) {
-        return updatemilktea.updateonecolume(guid, colume, value);
     }
 
     // 删除奶茶

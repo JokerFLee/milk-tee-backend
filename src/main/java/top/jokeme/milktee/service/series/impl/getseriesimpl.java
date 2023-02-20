@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import top.jokeme.milktee.dao.series;
-import top.jokeme.milktee.entity.toVueMultiData;
+import top.jokeme.milktee.entity.general.toVueMultiData;
 import top.jokeme.milktee.mapper.seriesMp;
 import top.jokeme.milktee.service.series.getseries;
 

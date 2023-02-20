@@ -1,9 +1,7 @@
 package top.jokeme.milktee.service.milktea;
 
-import top.jokeme.milktee.entity.milkteaMini;
-import top.jokeme.milktee.entity.toVueMultiData;
-
-import java.util.Map;
+import top.jokeme.milktee.entity.milktea.milkteaMini;
+import top.jokeme.milktee.entity.general.toVueMultiData;
 
 /**
  * project_name: milk-tee
