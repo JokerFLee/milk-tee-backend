@@ -1,6 +1,7 @@
 package top.jokeme.milktee.service.milktea;
 
 import top.jokeme.milktee.entity.samplemilktea;
+import top.jokeme.milktee.entity.general.toVueMultiData;
 
 /**
  * project_name: milk-tee
@@ -8,7 +9,5 @@ import top.jokeme.milktee.entity.samplemilktea;
  * date:         2022/10/1
  **/
 public interface updatemilktea {
-    String updatemilkteabuguid(samplemilktea samplemilktea);
-
-    String updateonecolume(String guid,String colume,String value);
+    toVueMultiData updatemilkteabyguid(samplemilktea samplemilktea);
 }

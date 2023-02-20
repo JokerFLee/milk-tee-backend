@@ -1,5 +1,6 @@
 package top.jokeme.milktee.utils;
 
+import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import top.jokeme.milktee.dao.milktea;
@@ -25,7 +26,7 @@ public class toOriginal {
         mt.setDiscount(samplemilktea.getDiscount());
         mt.setPicurl(samplemilktea.getPicurl());
         mt.setIntro(samplemilktea.getIntro());
-        mt.setTips(samplemilktea.getTips());
+        mt.setTips(new Gson().toJson(samplemilktea.getTips()));
         mt.setSeries(samplemilktea.getSeries());
         return mt;
     }

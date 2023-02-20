@@ -1,5 +1,7 @@
 package top.jokeme.milktee.dao;
 
+import java.util.List;
+
 /**
  * project_name: milk-tee
  * author:       frelon
@@ -17,22 +19,6 @@ public class milktea {
     String create_date;
     double discount;
     byte soldout;
-
-    @Override
-    public String toString() {
-        return "milktee{" +
-                "guid=" + guid +
-                ", name='" + name + '\'' +
-                ", price=" + price +
-                ", picurl='" + picurl + '\'' +
-                ", intro='" + intro + '\'' +
-                ", topic='" + tips + '\'' +
-                ", series='" + series + '\'' +
-                ", create_date='" + create_date + '\'' +
-                ", discount=" + discount +
-                ", soldout=" + soldout +
-                '}';
-    }
 
     public String getGuid() {
         return guid;
@@ -82,20 +68,20 @@ public class milktea {
         this.tips = tips;
     }
 
-    public String getCreate_date() {
-        return create_date;
-    }
-
-    public void setCreate_date(String create_date) {
-        this.create_date = create_date;
-    }
-
     public String getSeries() {
         return series;
     }
 
     public void setSeries(String series) {
         this.series = series;
+    }
+
+    public String getCreate_date() {
+        return create_date;
+    }
+
+    public void setCreate_date(String create_date) {
+        this.create_date = create_date;
     }
 
     public double getDiscount() {
@@ -113,24 +99,20 @@ public class milktea {
     public void setSoldout(byte soldout) {
         this.soldout = soldout;
     }
-        public milktea iswhich(milktea mt, String str, String value) {
-        if (str.equals("name")) {
-            mt.setName(value);
-        } else if (str.equals("price")) {
-            mt.setPrice(Double.parseDouble(value));
-        } else if (str.equals("picurl")) {
-            mt.setPicurl(value);
-        } else if (str.equals("intro")) {
-            mt.setIntro(value);
-        } else if (str.equals("tips")) {
-            mt.setTips(value);
-        } else if (str.equals("series")) {
-            mt.setSeries(value);
-        } else if (str.equals("discount")) {
-            mt.setDiscount(Double.parseDouble(value));
-        } else if (str.equals("soldout")) {
-            mt.setSoldout(Byte.parseByte(value));
-        }
-        return mt;
+
+    @Override
+    public String toString() {
+        return "milktea{" +
+                "guid='" + guid + '\'' +
+                ", name='" + name + '\'' +
+                ", price=" + price +
+                ", picurl='" + picurl + '\'' +
+                ", intro='" + intro + '\'' +
+                ", tips=" + tips +
+                ", series='" + series + '\'' +
+                ", create_date='" + create_date + '\'' +
+                ", discount=" + discount +
+                ", soldout=" + soldout +
+                '}';
     }
 }

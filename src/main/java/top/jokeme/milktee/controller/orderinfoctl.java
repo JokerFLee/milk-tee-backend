@@ -3,7 +3,7 @@ package top.jokeme.milktee.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import top.jokeme.milktee.entity.OrderContent;
+import top.jokeme.milktee.entity.orderinfo.OrderContent;
 import top.jokeme.milktee.service.orderinfo.getOrderByOuid;
 import top.jokeme.milktee.service.orderinfo.orderGenarate;
 

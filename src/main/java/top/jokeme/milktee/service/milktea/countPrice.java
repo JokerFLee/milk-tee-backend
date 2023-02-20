@@ -1,6 +1,7 @@
 package top.jokeme.milktee.service.milktea;
 
-import top.jokeme.milktee.entity.milkteaPrice;
+import top.jokeme.milktee.entity.milktea.milkteaPrice;
+import top.jokeme.milktee.entity.general.toVueSingleData;
 
 /**
  * project_name: milk-tee
@@ -8,6 +9,6 @@ import top.jokeme.milktee.entity.milkteaPrice;
  * date:         2022/11/8
  **/
 public interface countPrice {
-    String countMilkteaPrice(milkteaPrice[] list);
-    String countMilkteaPriceWithCheapCode(milkteaPrice[] list,String cheapcode);
+    toVueSingleData countMilkteaPrice(milkteaPrice[] list);
+    toVueSingleData countMilkteaPriceWithCheapCode(milkteaPrice[] list, String cheapcode);
 }

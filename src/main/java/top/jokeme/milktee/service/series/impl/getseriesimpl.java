@@ -6,9 +6,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import top.jokeme.milktee.dao.series;
+import top.jokeme.milktee.entity.general.toVueMultiData;
 import top.jokeme.milktee.mapper.seriesMp;
 import top.jokeme.milktee.service.series.getseries;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -51,14 +54,29 @@ public class getseriesimpl implements getseries {
     }
 
     @Override
-    public List getallseries() {
+    public toVueMultiData getallseries() {
         Logger logger = LoggerFactory.getLogger(getClass());
-        QueryWrapper qw = new QueryWrapper<>();
+        toVueMultiData<series> tvj = new toVueMultiData<>("/getallseries");
 
-        qw.orderByDesc("name");
-        List<series> seriesList = seriesMp.selectList(qw);
-        logger.info("xxx request for all series list");
-
-        return seriesList;
+        QueryWrapper qw = new QueryWrapper<>().orderByDesc("name");
+        List<series> seriesList = null;
+        try{
+            seriesList = seriesMp.selectList(qw);
+            tvj.oneKeyOk();
+            List list = new ArrayList<>();
+            for (series se : seriesList){
+                HashMap hm = new HashMap<>();
+                hm.put("value",se.getSuid());
+                hm.put("label",se.getName());
+                list.add(hm);
+            }
+            tvj.setDataList(list);
+            logger.info("Request for all series list");
+        }catch (Exception e){
+            logger.error("Mysql select all error.Does mysql is running?");
+            tvj.setErrorStatus(true);
+            tvj.setMsg("服务器内部错误!请联系管理员处理");
+        }
+        return tvj;
     }
 }

@@ -5,11 +5,10 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import top.jokeme.milktee.entity.general.toVueMultiData;
 import top.jokeme.milktee.service.series.addseries;
 import top.jokeme.milktee.service.series.delseries;
 import top.jokeme.milktee.service.series.getseries;
-
-import java.util.List;
 
 /**
  * project_name: milk-tee
@@ -50,7 +49,7 @@ public class seriesctl {
 
     @ResponseBody
     @RequestMapping("getallseries")
-    public List getallseries() {
+    public toVueMultiData getallseries() {
         return getseries.getallseries();
     }
 }

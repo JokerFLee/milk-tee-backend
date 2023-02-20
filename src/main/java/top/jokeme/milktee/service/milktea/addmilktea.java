@@ -1,6 +1,7 @@
 package top.jokeme.milktee.service.milktea;
 
-import java.util.Map;
+import top.jokeme.milktee.entity.milktea.milkteaMini;
+import top.jokeme.milktee.entity.general.toVueMultiData;
 
 /**
  * project_name: milk-tee
@@ -8,5 +9,5 @@ import java.util.Map;
  * date:         2022/9/19
  **/
 public interface addmilktea {
-    Integer addmilktee(Map<String,String> map);
+    toVueMultiData addmilktee(milkteaMini mtm);
 }

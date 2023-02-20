@@ -1,6 +1,6 @@
 package top.jokeme.milktee.service.series;
 
-import java.util.List;
+import top.jokeme.milktee.entity.general.toVueMultiData;
 
 /**
  * project_name: milk-tee
@@ -10,5 +10,5 @@ import java.util.List;
 public interface getseries {
     boolean getseriesbyname(String name);
     boolean getseriesbyuuid(Integer uuid);
-    List getallseries();
+    toVueMultiData getallseries();
 }

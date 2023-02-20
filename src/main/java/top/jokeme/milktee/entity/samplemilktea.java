@@ -1,5 +1,7 @@
 package top.jokeme.milktee.entity;
 
+import java.util.List;
+
 /**
  * project_name: milk-tee
  * author:       frelon
@@ -14,7 +16,7 @@ public class samplemilktea {
     double discount;
     String picurl;
     String intro;
-    String tips;
+    List<String> tips;
     String series;
 
     public String getGuid() {
@@ -73,11 +75,11 @@ public class samplemilktea {
         this.intro = intro;
     }
 
-    public String getTips() {
+    public List<String> getTips() {
         return tips;
     }
 
-    public void setTips(String tips) {
+    public void setTips(List<String> tips) {
         this.tips = tips;
     }
 
@@ -99,7 +101,7 @@ public class samplemilktea {
                 ", discount=" + discount +
                 ", picurl='" + picurl + '\'' +
                 ", intro='" + intro + '\'' +
-                ", tips='" + tips + '\'' +
+                ", tips=" + tips +
                 ", series='" + series + '\'' +
                 '}';
     }
