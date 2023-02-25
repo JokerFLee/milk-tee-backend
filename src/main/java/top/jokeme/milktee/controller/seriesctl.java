@@ -31,19 +31,19 @@ public class seriesctl {
 
     @ResponseBody
     @RequestMapping("addseries")
-    public String addseries(String series) {
+    public boolean addseries(String series) {
         return addseries.addseries(series);
     }
 
     @ResponseBody
     @RequestMapping("delseries")
-    public String delseries(String suid) {
+    public boolean delseries(String suid) {
         return delseries.delseries(suid);
     }
 
     @ResponseBody
     @RequestMapping("checkseries")
-    public Boolean getseriesbyname(String seriesname) {
+    public boolean getseriesbyname(String seriesname) {
         return getseries.getseriesbyname(seriesname);
     }
 

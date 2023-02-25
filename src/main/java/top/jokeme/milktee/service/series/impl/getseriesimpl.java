@@ -30,13 +30,15 @@ public class getseriesimpl implements getseries {
         Logger logger = LoggerFactory.getLogger(getClass());
         QueryWrapper qw = new QueryWrapper();
         qw.eq("name", name);
-        logger.info("Getting request for check series exist by name : '" + name + "'");
+
         series x = seriesMp.selectOne(qw);
-        if (x == null) {
-            logger.warn("The request for name : '" + name + "' not exist in series");
-            return false;
+        if (x != null) {
+            logger.info("Request to check series exist by name : '" + name + "' (Yes)");
+            return true;
         }
-        return true;
+        logger.warn("Request for name : '" + name + "' not exist in series (No)");
+        return false;
+
     }
 
     @Override
@@ -44,10 +46,8 @@ public class getseriesimpl implements getseries {
         Logger logger = LoggerFactory.getLogger(getClass());
         QueryWrapper qw = new QueryWrapper();
         qw.eq("suid", uuid);
-        logger.info("Getting request for check series exist by suid : '" + uuid + "'");
         series x = seriesMp.selectOne(qw);
         if (x == null) {
-            logger.warn("The request for suid : '" + uuid + "' not exist in series");
             return false;
         }
         return true;
