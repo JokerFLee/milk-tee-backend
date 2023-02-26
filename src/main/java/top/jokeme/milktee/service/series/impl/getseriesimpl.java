@@ -60,19 +60,39 @@ public class getseriesimpl implements getseries {
 
         QueryWrapper qw = new QueryWrapper<>().orderByDesc("name");
         List<series> seriesList = null;
-        try{
+        try {
             seriesList = seriesMp.selectList(qw);
             tvj.oneKeyOk();
             List list = new ArrayList<>();
-            for (series se : seriesList){
+            for (series se : seriesList) {
                 HashMap hm = new HashMap<>();
-                hm.put("value",se.getSuid());
-                hm.put("label",se.getName());
+                hm.put("value", se.getSuid());
+                hm.put("label", se.getName());
                 list.add(hm);
             }
             tvj.setDataList(list);
             logger.info("Request for all series list");
-        }catch (Exception e){
+        } catch (Exception e) {
+            logger.error("Mysql select all error.Does mysql is running?");
+            tvj.setErrorStatus(true);
+            tvj.setMsg("服务器内部错误!请联系管理员处理");
+        }
+        return tvj;
+    }
+
+    @Override
+    public toVueMultiData getOrderlySeriesList() {
+        Logger logger = LoggerFactory.getLogger(getClass());
+        toVueMultiData<series> tvj = new toVueMultiData<>("/getorderlyseries");
+        QueryWrapper qw = new QueryWrapper();
+        qw.orderByDesc("create_date");
+        List<series> list = new ArrayList<>();
+        try {
+            list = seriesMp.selectList(qw);
+            logger.info(list.toString());
+            tvj.oneKeyOk();
+            tvj.setDataList(list);
+        } catch (Exception e) {
             logger.error("Mysql select all error.Does mysql is running?");
             tvj.setErrorStatus(true);
             tvj.setMsg("服务器内部错误!请联系管理员处理");

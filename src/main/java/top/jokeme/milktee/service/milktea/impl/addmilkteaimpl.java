@@ -42,21 +42,19 @@ public class addmilkteaimpl implements addmilktea {
         mt.setCreate_date(new NTime().getNowTime());
         mt.setDiscount(1f);
         mt.setSoldout((byte) 0);
-
-        logger.info("Save this data to mysql : "+mt.toString());
-        toVueMultiData tvj = new toVueMultiData<Integer>();
+        logger.debug("Insert milktea to mysql");
+        toVueMultiData tvj = new toVueMultiData<Integer>("/addmilktea");
         try {
             milkteaMp.insert(mt);
-            tvj.setLocation("/addmilktea");
             tvj.setErrorStatus(false);
             tvj.setMsg("数据保存成功!");
-            tvj.setDataList(null);
+            logger.info("Insert milktea to mysql success!");
         }catch (Exception e){
             logger.info(e.toString());
-            tvj.setLocation("/addmilktea");
             tvj.setErrorStatus(true);
             tvj.setMsg("数据保存失败!");
-            tvj.setDataList(null);
+
+            logger.warn("Insert milktea to mysql faild!");
         }
         return tvj;
     }

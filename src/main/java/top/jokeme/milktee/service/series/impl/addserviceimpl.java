@@ -8,6 +8,7 @@ import top.jokeme.milktee.dao.series;
 import top.jokeme.milktee.mapper.seriesMp;
 import top.jokeme.milktee.service.series.addseries;
 import top.jokeme.milktee.service.series.getseries;
+import top.jokeme.milktee.utils.NTime;
 import top.jokeme.milktee.utils.uuid;
 
 /**
@@ -44,11 +45,12 @@ public class addserviceimpl implements addseries {
         series serie = new series();
         serie.setName(se);
         serie.setSuid(x);
+        serie.setCreate_date(new NTime().getNowTime());
 
         if (!getseries.getseriesbyname(se)) {
             Integer y = seriesMp.insert(serie);
             if (y == 1) {
-                logger.info("Add series : " + se + " successfully!");
+                logger.debug("Add series : " + se + " successfully!");
                 return true;
             } else {
                 logger.error("Insert series into mysql error, returned : '" + y + "'");

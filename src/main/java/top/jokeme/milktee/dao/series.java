@@ -2,23 +2,17 @@ package top.jokeme.milktee.dao;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 
+import javax.xml.crypto.Data;
+
 /**
  * project_name: milk-tee
  * author:       frelon
  * date:         2022/9/19
  **/
 public class series {
-    @TableId
     Integer suid;
     String name;
-
-    @Override
-    public String toString() {
-        return "series{" +
-                "suid=" + suid +
-                ", name='" + name + '\'' +
-                '}';
-    }
+    String create_date;
 
     public Integer getSuid() {
         return suid;
@@ -34,5 +28,22 @@ public class series {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getCreate_date() {
+        return create_date;
+    }
+
+    public void setCreate_date(String create_date) {
+        this.create_date = create_date;
+    }
+
+    @Override
+    public String toString() {
+        return "series{" +
+                "suid=" + suid +
+                ", name='" + name + '\'' +
+                ", create_date='" + create_date + '\'' +
+                '}';
     }
 }

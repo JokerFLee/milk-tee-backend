@@ -1,10 +1,10 @@
 package top.jokeme.milktee.controller;
 
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import top.jokeme.milktee.entity.general.toVueMultiData;
 import top.jokeme.milktee.service.series.addseries;
 import top.jokeme.milktee.service.series.delseries;
@@ -15,7 +15,7 @@ import top.jokeme.milktee.service.series.getseries;
  * author:       frelon
  * date:         2022/9/25
  **/
-@Controller
+@RestController
 @SuppressWarnings("ALL")
 @CrossOrigin(origins = "*")
 public class seriesctl {
@@ -51,5 +51,11 @@ public class seriesctl {
     @RequestMapping("getallseries")
     public toVueMultiData getallseries() {
         return getseries.getallseries();
+    }
+
+    @ResponseBody
+    @RequestMapping("getorderlyseries")
+    public toVueMultiData getorderlyserieslist() {
+        return getseries.getOrderlySeriesList();
     }
 }

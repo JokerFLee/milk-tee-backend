@@ -1,11 +1,15 @@
 package top.jokeme.milktee.service.milktea.impl;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import top.jokeme.milktee.dao.milktea;
+import top.jokeme.milktee.dao.series;
 import top.jokeme.milktee.entity.samplemilktea;
 import top.jokeme.milktee.entity.general.toVueMultiData;
 import top.jokeme.milktee.entity.general.toVueSingleData;
@@ -43,9 +47,9 @@ public class getmilkteainfoimpl implements getmilkteainfo {
         qw.orderByDesc("create_date");//倒序 最新的在最前
 //        qw.orderByAsc("create_date"); // 正序 最新的在最后
         List<milktea> list = null;
-        try{
+        try {
             list = milkteaMp.selectList(qw);
-        }catch (Exception e){
+        } catch (Exception e) {
             logger.error("Mysql select all error.Does mysql is running?");
             tvj.setErrorStatus(true);
             tvj.setMsg("服务器内部错误!请联系管理员处理");
@@ -73,11 +77,11 @@ public class getmilkteainfoimpl implements getmilkteainfo {
         logger.info("Get request for check the name : " + name + " is exist in milktea. Passed");
         QueryWrapper qw = new QueryWrapper<>().eq("name", name);
         boolean ex;
-        try{
+        try {
             ex = milkteaMp.exists(qw);
             tvj.oneKeyOk();
             tvj.setSingleDate(true);
-        }catch (Exception e){
+        } catch (Exception e) {
             logger.error("Mysql querry exist error.Does mysql is running?");
             tvj.setErrorStatus(true);
             tvj.setMsg("服务器内部错误!请联系管理员处理!");
@@ -100,8 +104,8 @@ public class getmilkteainfoimpl implements getmilkteainfo {
         QueryWrapper qw = new QueryWrapper<>().eq("guid", guid);
         samplemilktea smt = null;
         try {
-            QueryWrapper qwe = new QueryWrapper<>().eq("guid",guid);
-            if (!milkteaMp.exists(qwe)){
+            QueryWrapper qwe = new QueryWrapper<>().eq("guid", guid);
+            if (!milkteaMp.exists(qwe)) {
                 logger.warn("这小子找茬!修改了数据来查一个不存在的数据啊!");
                 tvj.setMsg("所查询数据不存在!");
                 tvj.setErrorStatus(true);
@@ -112,7 +116,7 @@ public class getmilkteainfoimpl implements getmilkteainfo {
             List<samplemilktea> list = new ArrayList<>();
             list.add(smt);
             tvj.setDataList(list);
-        }catch (Exception e){
+        } catch (Exception e) {
             logger.error("Mysql select one error.Does mysql is running?");
             tvj.setErrorStatus(true);
             tvj.setMsg("服务器内部错误!请联系管理员处理");
@@ -121,7 +125,7 @@ public class getmilkteainfoimpl implements getmilkteainfo {
     }
 
     /*
-     * 这个方法只在内部调用，无法通过外部url来触发调用
+     * 这个方法只打算在内部调用，无法通过外部url来触发调用
      * 根据 guid 返回的 milktea 类
      * */
     @Override
@@ -140,24 +144,25 @@ public class getmilkteainfoimpl implements getmilkteainfo {
     @Override
     public toVueMultiData<samplemilktea> getDescSampleTeaList() {
         toVueMultiData<samplemilktea> tvj = new toVueMultiData<>("/getdescmilktealist");
-
         Logger logger = LoggerFactory.getLogger(getClass());
-        logger.info("xxx get samplemilktea list");
 
-        QueryWrapper qw = new QueryWrapper<>();
-        qw.orderBy(true, false, "series", "create_date");
+        logger.info("Request to get all desc milktea list");
         List<milktea> mt = null;
-        try{
-            mt = milkteaMp.selectList(qw);
-        }catch (Exception e){
+        try {
+            mt = milkteaMp.selectAllDescList();
+
+            logger.debug("Succeeded in querying all desc data");
+
+        } catch (Exception e) {
+
             logger.error("Mysql select all error.Does mysql is running?");
+            logger.debug("This is the error message that appears:"+e.toString());
+
             tvj.setErrorStatus(true);
             tvj.setMsg("服务器内部错误!请联系管理员处理");
             return tvj;
         }
-
         List list = new ArrayList<>();
-
         for (milktea tea : mt) {
             list.add(new toSample().getsamplemilktea(tea));
         }
