@@ -41,9 +41,6 @@ public class milkteactl {
     private delMilkTea delMilkTea;
 
     @Autowired
-    private getMilkteaCount getMilkteaCount;
-
-    @Autowired
     private modifyMilkteaDIY modifyMilkteaDIY;
 
     @Autowired
@@ -117,13 +114,6 @@ public class milkteactl {
     @RequestMapping("getdescmilktealist")
     public toVueMultiData getsamplemilktealist(){
         return getmilkteainfo.getDescSampleTeaList();
-    }
-
-    // 统计某个系列里奶茶数量
-    @ResponseBody
-    @RequestMapping("getmilkteacount")
-    public toVueMultiData getmilkteaCount(){
-        return getMilkteaCount.getMilkteaSeriesCount();
     }
 
     // 计算奶茶价格

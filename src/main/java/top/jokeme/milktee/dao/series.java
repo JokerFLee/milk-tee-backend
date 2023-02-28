@@ -1,5 +1,6 @@
 package top.jokeme.milktee.dao;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 
 import javax.xml.crypto.Data;
@@ -10,8 +11,14 @@ import javax.xml.crypto.Data;
  * date:         2022/9/19
  **/
 public class series {
+
+    @TableId
     Integer suid;
+    @TableField("name")
     String name;
+    @TableField("number")
+    Integer number;
+    @TableField(value = "create_date")
     String create_date;
 
     public Integer getSuid() {
@@ -30,6 +37,14 @@ public class series {
         this.name = name;
     }
 
+    public Integer getNumber() {
+        return number;
+    }
+
+    public void setNumber(Integer number) {
+        this.number = number;
+    }
+
     public String getCreate_date() {
         return create_date;
     }
@@ -43,6 +58,7 @@ public class series {
         return "series{" +
                 "suid=" + suid +
                 ", name='" + name + '\'' +
+                ", number=" + number +
                 ", create_date='" + create_date + '\'' +
                 '}';
     }

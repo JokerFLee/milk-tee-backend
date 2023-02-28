@@ -1,14 +1,18 @@
 package top.jokeme.milktee.service.milktea.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.google.gson.Gson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import top.jokeme.milktee.dao.milktea;
+import top.jokeme.milktee.dao.series;
 import top.jokeme.milktee.entity.milktea.milkteaMini;
 import top.jokeme.milktee.entity.general.toVueMultiData;
 import top.jokeme.milktee.mapper.milkteaMp;
+import top.jokeme.milktee.mapper.seriesMp;
 import top.jokeme.milktee.service.milktea.addmilktea;
 import top.jokeme.milktee.utils.NTime;
 import top.jokeme.milktee.utils.uuid;
@@ -24,6 +28,9 @@ public class addmilkteaimpl implements addmilktea {
 
     @Autowired
     private milkteaMp milkteaMp;
+
+    @Autowired
+    private seriesMp seriesMp;
 
     @Override
     public toVueMultiData addmilktee(milkteaMini mtm) {
@@ -45,6 +52,12 @@ public class addmilkteaimpl implements addmilktea {
         logger.debug("Insert milktea to mysql");
         toVueMultiData tvj = new toVueMultiData<Integer>("/addmilktea");
         try {
+            QueryWrapper qw = new QueryWrapper<>();
+            qw.eq("suid",mt.getSeries());
+            series se = seriesMp.selectOne(qw);
+            se.setNumber(se.getNumber()+1);
+            seriesMp.update(se,qw);
+
             milkteaMp.insert(mt);
             tvj.setErrorStatus(false);
             tvj.setMsg("数据保存成功!");

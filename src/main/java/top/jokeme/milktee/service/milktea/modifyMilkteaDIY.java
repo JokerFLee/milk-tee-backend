@@ -8,6 +8,7 @@ import top.jokeme.milktee.entity.general.toVueMultiData;
  * author:       frelon
  * date:         2022/10/27
  **/
+@Deprecated
 public interface modifyMilkteaDIY {
     toVueMultiData modifyMilkteaDIY(milkteadiy mtdiy);
     toVueMultiData getbyguid(String guid);

@@ -22,6 +22,7 @@ import top.jokeme.milktee.service.milktea.countPrice;
 
 @Service
 @SuppressWarnings("ALL")
+@Deprecated
 public class countPriceImpl implements countPrice {
 
     @Autowired

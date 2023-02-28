@@ -6,9 +6,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import top.jokeme.milktee.dao.milktea;
+import top.jokeme.milktee.dao.series;
 import top.jokeme.milktee.entity.samplemilktea;
 import top.jokeme.milktee.entity.general.toVueMultiData;
 import top.jokeme.milktee.mapper.milkteaMp;
+import top.jokeme.milktee.mapper.seriesMp;
 import top.jokeme.milktee.service.milktea.getmilkteainfo;
 import top.jokeme.milktee.service.milktea.updatemilktea;
 import top.jokeme.milktee.utils.toOriginal;
@@ -28,6 +30,9 @@ public class updatemilkteaimpl implements updatemilktea {
     @Autowired
     private getmilkteainfo getmilkteainfo;
 
+    @Autowired
+    private seriesMp seriesMp;
+
 
     /*
      * 这种方法最简单了，直接把前端传过来的 samplemilktea 类型
@@ -45,7 +50,25 @@ public class updatemilkteaimpl implements updatemilktea {
         milktea tmp;
         milktea mt;
         try {
+
             tmp = milkteaMp.selectOne(qw);
+            if (samplemilktea.getSeries() != tmp.getSeries()){
+                QueryWrapper qw1 = new QueryWrapper<>();
+                QueryWrapper qw2 = new QueryWrapper<>();
+
+                qw1.eq("suid",tmp.getSeries());//Original
+                qw2.eq("suid",samplemilktea.getSeries());//new
+
+                series se1 = seriesMp.selectOne(qw1);
+                series se2 = seriesMp.selectOne(qw2);
+
+                se1.setNumber(se1.getNumber()-1);
+                se2.setNumber(se2.getNumber()+1);
+
+                seriesMp.update(se1,qw1);
+                seriesMp.update(se2,qw2);
+
+            }
             logger.info(samplemilktea.toString());
             mt = new toOriginal().getOriginalMilkTea(samplemilktea);
             mt.setCreate_date(tmp.getCreate_date());

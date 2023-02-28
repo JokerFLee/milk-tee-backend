@@ -8,6 +8,7 @@ import top.jokeme.milktee.entity.general.toVueSingleData;
  * author:       frelon
  * date:         2022/11/8
  **/
+@Deprecated
 public interface countPrice {
     toVueSingleData countMilkteaPrice(milkteaPrice[] list);
     toVueSingleData countMilkteaPriceWithCheapCode(milkteaPrice[] list, String cheapcode);

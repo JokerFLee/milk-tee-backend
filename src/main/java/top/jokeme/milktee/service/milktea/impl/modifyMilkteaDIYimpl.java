@@ -23,6 +23,7 @@ import java.util.List;
 
 @Service
 @SuppressWarnings("ALL")
+@Deprecated
 public class modifyMilkteaDIYimpl implements modifyMilkteaDIY {
 
     @Autowired

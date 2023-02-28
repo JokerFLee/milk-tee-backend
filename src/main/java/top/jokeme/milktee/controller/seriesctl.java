@@ -58,4 +58,10 @@ public class seriesctl {
     public toVueMultiData getorderlyserieslist() {
         return getseries.getOrderlySeriesList();
     }
+
+    @ResponseBody
+    @RequestMapping("getseriescount")
+    public toVueMultiData getseriescount(){
+        return getseries.getSeriesCount();
+    }
 }

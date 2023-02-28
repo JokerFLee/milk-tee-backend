@@ -99,4 +99,33 @@ public class getseriesimpl implements getseries {
         }
         return tvj;
     }
+
+    @Override
+    public toVueMultiData getSeriesCount() {
+        Logger logger = LoggerFactory.getLogger(getClass());
+
+        toVueMultiData tvj = new toVueMultiData<>("/getseriescount");
+        QueryWrapper qw = new QueryWrapper();
+        qw.select("suid","number");
+        List<series> list = new ArrayList<>();
+        logger.info("is querying the series and its corresponding number");
+        try{
+             list = seriesMp.selectList(qw);
+             List list1 = new ArrayList<>();
+             for (series se : list){
+                 HashMap hm = new HashMap<>();
+                 hm.put("suid",se.getSuid());
+                 hm.put("number",se.getNumber());
+                 list1.add(hm);
+             }
+             tvj.oneKeyOk();
+             tvj.setDataList(list1);
+             logger.debug("Query series and its number successfully");
+        }catch (Exception e){
+            logger.error("Mysql select all error.Does mysql is running?");
+            tvj.setErrorStatus(true);
+            tvj.setMsg("服务器内部错误!请联系管理员处理");
+        }
+        return tvj;
+    }
 }
