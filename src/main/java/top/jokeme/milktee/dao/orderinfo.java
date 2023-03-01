@@ -16,19 +16,7 @@ public class orderinfo {
     String del_time;
     String refund_time;
 
-    @Override
-    public String toString() {
-        return "orderinfo{" +
-                "ouid='" + ouid + '\'' +
-                ", order_detail='" + order_detail + '\'' +
-                ", order_time='" + order_time + '\'' +
-                ", money='" + money + '\'' +
-                ", isdel=" + isdel +
-                ", refund=" + refund +
-                ", del_time='" + del_time + '\'' +
-                ", refund_time='" + refund_time + '\'' +
-                '}';
-    }
+    String pay_method;
 
     public String getDel_time() {
         return del_time;
@@ -92,5 +80,28 @@ public class orderinfo {
 
     public void setRefund(byte refund) {
         this.refund = refund;
+    }
+
+    public String getPay_method() {
+        return pay_method;
+    }
+
+    public void setPay_method(String pay_method) {
+        this.pay_method = pay_method;
+    }
+
+    @Override
+    public String toString() {
+        return "orderinfo{" +
+                "ouid='" + ouid + '\'' +
+                ", order_detail='" + order_detail + '\'' +
+                ", order_time='" + order_time + '\'' +
+                ", money='" + money + '\'' +
+                ", isdel=" + isdel +
+                ", refund=" + refund +
+                ", del_time='" + del_time + '\'' +
+                ", refund_time='" + refund_time + '\'' +
+                ", pay_method='" + pay_method + '\'' +
+                '}';
     }
 }

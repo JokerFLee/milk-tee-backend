@@ -1,17 +1,26 @@
 package top.jokeme.milktee.dao;
 
+import com.baomidou.mybatisplus.annotation.TableField;
+
 /**
  * project_name: milk-tee
  * author:       frelon
  * date:         2022/12/29
  **/
 public class cheapcode {
+    @TableField("code")
     String code;
+    @TableField("type")
     byte type;
+    @TableField("content")
     String content;
+    @TableField("create_time")
     String create_time;
+    @TableField("dead_line")
     String dead_line;
+    @TableField("reuse")
     byte reuse;
+    @TableField("used")
     byte used;
 
     @Override
