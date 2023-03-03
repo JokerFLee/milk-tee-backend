@@ -86,10 +86,10 @@ public class getseriesimpl implements getseries {
         toVueMultiData<series> tvj = new toVueMultiData<>("/getorderlyseries");
         QueryWrapper qw = new QueryWrapper();
         qw.orderByDesc("create_date");
+        logger.info("Request all series data");
         List<series> list = new ArrayList<>();
         try {
             list = seriesMp.selectList(qw);
-            logger.info(list.toString());
             tvj.oneKeyOk();
             tvj.setDataList(list);
         } catch (Exception e) {

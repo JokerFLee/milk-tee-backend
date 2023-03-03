@@ -1,5 +1,8 @@
 package top.jokeme.milktee.dao;
 
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+
 /**
  * project_name: milk-tee
  * author:       frelon
@@ -7,16 +10,28 @@ package top.jokeme.milktee.dao;
  **/
 public class orderinfo {
 
+    @TableId
     String ouid;
+    @TableField("order_detail")
     String order_detail;
+    @TableField("order_time")
     String order_time;
+    @TableField("money")
     String money;
+    @TableField("isdel")
     byte isdel;
+    @TableField("refund")
     byte refund;
+    @TableField("del_time")
     String del_time;
+    @TableField("refund_time")
     String refund_time;
-
+    @TableField("pay_method")
     String pay_method;
+    @TableField("cheapcode")
+    String cheapcode;
+    @TableField("paid")
+    char paid;
 
     public String getDel_time() {
         return del_time;
@@ -90,6 +105,22 @@ public class orderinfo {
         this.pay_method = pay_method;
     }
 
+    public String getCheapcode() {
+        return cheapcode;
+    }
+
+    public void setCheapcode(String cheapcode) {
+        this.cheapcode = cheapcode;
+    }
+
+    public char getPaid() {
+        return paid;
+    }
+
+    public void setPaid(char paid) {
+        this.paid = paid;
+    }
+
     @Override
     public String toString() {
         return "orderinfo{" +
@@ -102,6 +133,8 @@ public class orderinfo {
                 ", del_time='" + del_time + '\'' +
                 ", refund_time='" + refund_time + '\'' +
                 ", pay_method='" + pay_method + '\'' +
+                ", cheapcode='" + cheapcode + '\'' +
+                ", paid='" + paid + '\'' +
                 '}';
     }
 }

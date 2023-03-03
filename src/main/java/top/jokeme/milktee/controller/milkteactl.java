@@ -8,7 +8,6 @@ import top.jokeme.milktee.entity.*;
 import top.jokeme.milktee.entity.general.toVueMultiData;
 import top.jokeme.milktee.entity.general.toVueSingleData;
 import top.jokeme.milktee.entity.milktea.milkteaMini;
-import top.jokeme.milktee.entity.milktea.milkteaPrice;
 import top.jokeme.milktee.service.milktea.*;
 
 import java.io.IOException;
@@ -46,7 +45,7 @@ public class milkteactl {
     @Autowired
     private countPrice countPrice;
 
-    // 上传奶茶数据接口 接受map类对象
+    // 上传奶茶数据接口 接受milkteaMini类对象
     @ResponseBody
     @PostMapping("addmilktea")
     public toVueMultiData add_a_milktea(@RequestBody milkteaMini mtm) {
@@ -61,6 +60,7 @@ public class milkteactl {
     }
 
     // 修改奶茶口味接口
+    @Deprecated
     @ResponseBody
     @PostMapping("modifymilkteadiyparams")
     public toVueMultiData modifymtDIY(@RequestBody milkteadiy mtdiy){
@@ -68,6 +68,7 @@ public class milkteactl {
     }
 
     // 获取奶茶可以有那些口味
+    @Deprecated
     @ResponseBody
     @RequestMapping("getdiytea")
     public toVueMultiData getmilkteadiyinfobyguid(String guid){
@@ -116,17 +117,4 @@ public class milkteactl {
         return getmilkteainfo.getDescSampleTeaList();
     }
 
-    // 计算奶茶价格
-    @ResponseBody
-    @PostMapping("getMilkteaPriceCount")
-    public toVueSingleData getMilktePriceCount(@RequestBody milkteaPrice[] list){
-        return countPrice.countMilkteaPrice(list);
-    }
-
-    // 计算使用优惠码后的奶茶价格
-    @ResponseBody
-    @PostMapping("getMilkteaPriceCountwithcheapcode")
-    public toVueSingleData getMilktePriceCountwithcheapcode(@RequestBody milkteaPrice[] list, String cheapcode){
-        return countPrice.countMilkteaPriceWithCheapCode(list, cheapcode);
-    }
 }

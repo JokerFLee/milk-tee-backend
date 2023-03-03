@@ -124,23 +124,6 @@ public class getmilkteainfoimpl implements getmilkteainfo {
         return tvj;
     }
 
-    /*
-     * 这个方法只打算在内部调用，无法通过外部url来触发调用
-     * 根据 guid 返回的 milktea 类
-     * */
-    @Override
-    public milktea getRealMilkTeaByGuid(String guid) {
-        Logger logger = LoggerFactory.getLogger(getClass());
-        logger.info("{return milktea} Get request to get the detail infomation of guid : " + guid + " in milktea. Passed");
-
-        QueryWrapper qw = new QueryWrapper<>();
-        qw.eq("guid", guid);
-
-        milktea mk = milkteaMp.selectOne(qw);
-
-        return new milktea();
-    }
-
     @Override
     public toVueMultiData<samplemilktea> getDescSampleTeaList() {
         toVueMultiData<samplemilktea> tvj = new toVueMultiData<>("/getdescmilktealist");
