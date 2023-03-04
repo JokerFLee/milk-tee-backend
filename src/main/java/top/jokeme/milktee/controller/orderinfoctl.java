@@ -1,11 +1,13 @@
 package top.jokeme.milktee.controller;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import top.jokeme.milktee.entity.general.toVueMultiData;
 import top.jokeme.milktee.entity.orderinfo.OrderContent;
 import top.jokeme.milktee.service.orderinfo.getOrderByOuid;
+import top.jokeme.milktee.service.orderinfo.getOrderPage;
 import top.jokeme.milktee.service.orderinfo.manageOrder;
 import top.jokeme.milktee.service.orderinfo.orderGenarate;
 
@@ -32,6 +34,9 @@ public class orderinfoctl {
     @Autowired
     private manageOrder manageOrder;
 
+    @Autowired
+    private getOrderPage getOrderPage;
+
     @ResponseBody
     @PostMapping("generateorder")
     public toVueMultiData generateOrder(@RequestBody HashMap<String,Integer> moc,@RequestParam("money") String money){
@@ -54,4 +59,12 @@ public class orderinfoctl {
     public boolean pay(String payMethod,String ouid){
         return manageOrder.pay(payMethod,ouid);
     }
+
+    @ResponseBody
+    @RequestMapping("getOrderPage")
+    public toVueMultiData getOrderPage(Integer page,Integer size){
+        System.out.println(page+" "+size);
+        return getOrderPage.getOrderPageList(new Page<>(page,size));
+    }
+
 }
