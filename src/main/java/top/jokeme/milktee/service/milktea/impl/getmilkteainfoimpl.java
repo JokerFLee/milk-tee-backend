@@ -62,7 +62,6 @@ public class getmilkteainfoimpl implements getmilkteainfo {
         logger.info("request for all Milktea list");
         tvj.oneKeyOk();
         tvj.setDataList(filist);
-        logger.info(tvj.toString());
         return tvj;
     }
 

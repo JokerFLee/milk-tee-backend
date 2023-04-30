@@ -12,6 +12,6 @@ import java.util.List;
  * date:         2022/9/19
  **/
 public interface milkteaMp extends BaseMapper<milktea> {
-    @Select("select * from milktea join series on milktea.series = series.suid order by series.create_date desc, milktea.create_date desc")
+    @Select("select * from milktea as m join series as s on m.series = s.suid order by s.create_date desc, m.create_date desc")
     List<milktea> selectAllDescList();
 }

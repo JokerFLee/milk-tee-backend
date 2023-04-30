@@ -54,12 +54,6 @@ public class seriesctl {
     }
 
     @ResponseBody
-    @RequestMapping("getorderlyseries")
-    public toVueMultiData getorderlyserieslist() {
-        return getseries.getOrderlySeriesList();
-    }
-
-    @ResponseBody
     @RequestMapping("getseriescount")
     public toVueMultiData getseriescount(){
         return getseries.getSeriesCount();

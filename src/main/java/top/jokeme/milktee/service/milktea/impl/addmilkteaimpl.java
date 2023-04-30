@@ -52,12 +52,6 @@ public class addmilkteaimpl implements addmilktea {
         logger.debug("Insert milktea to mysql");
         toVueMultiData tvj = new toVueMultiData<Integer>("/addmilktea");
         try {
-            QueryWrapper qw = new QueryWrapper<>();
-            qw.eq("suid",mt.getSeries());
-            series se = seriesMp.selectOne(qw);
-            se.setNumber(se.getNumber()+1);
-            seriesMp.update(se,qw);
-
             milkteaMp.insert(mt);
             tvj.setErrorStatus(false);
             tvj.setMsg("数据保存成功!");

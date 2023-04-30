@@ -42,15 +42,7 @@ public class delMilkTeaImpl implements delMilkTea {
             if (milkteaMp.exists(qw)){
                 logger.info("Will delete the record : "+milkteaMp.selectOne(qw).toString());
                 try {
-                    QueryWrapper qw1 = new QueryWrapper<>();
                     milktea mt = milkteaMp.selectOne(qw);
-                    qw1.eq("suid",mt.getSeries());
-                    series se = seriesMp.selectOne(qw1);
-                    se.setNumber(se.getNumber()-1);
-
-                    if (milkteaMp.delete(qw) == 1){
-                        seriesMp.update(se,qw1);
-                    };
                     logger.info("Delete record success!");
                     tvj.setMsg("删除成功!");
                     tvj.setErrorStatus(false);

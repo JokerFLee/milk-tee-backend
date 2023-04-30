@@ -45,7 +45,6 @@ public class addserviceimpl implements addseries {
         series serie = new series();
         serie.setName(se);
         serie.setSuid(x);
-        serie.setNumber(0);
         serie.setCreate_date(new NTime().getNowTime());
 
         if (!getseries.getseriesbyname(se)) {

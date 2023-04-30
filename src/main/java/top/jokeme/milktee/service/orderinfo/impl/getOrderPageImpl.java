@@ -22,16 +22,22 @@ public class getOrderPageImpl implements getOrderPage {
     private orderMp orderMp;
 
     @Override
-    public toVueMultiData getOrderPageList(Page<orderinfo> page) {
+    public toVueMultiData getOrderPageList(Integer page,Integer size) {
         toVueMultiData<orderinfo> tvj = new toVueMultiData<>("/getOrderPageList");
         Logger logger = LoggerFactory.getLogger(getClass());
 
         QueryWrapper qw = new QueryWrapper<>();
-        IPage<orderinfo> orderPages = orderMp.selectPage(page,qw);
+        qw.orderByDesc("order_time");
+        qw.eq("isdel",0);
 
-        List<orderinfo> list = orderPages.getRecords();
+        IPage<orderinfo> thispage = new Page<>(page,size);
+        IPage<orderinfo> ipg = orderMp.selectPage(thispage,qw);
+
+        List<orderinfo> list = ipg.getRecords();
+
         tvj.setDataList(list);
-        tvj.oneKeyOk();
+        tvj.setErrorStatus(false);
+        tvj.setMsg(String.valueOf(ipg.getTotal()));
         return tvj;
     }
 }

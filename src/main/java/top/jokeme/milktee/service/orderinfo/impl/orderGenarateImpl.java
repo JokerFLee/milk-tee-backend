@@ -83,7 +83,7 @@ public class orderGenarateImpl implements orderGenarate {
             od.setPay_method(null);
             od.setRefund((byte) 0);
             od.setRefund_time(null);
-            od.setMoney(String.valueOf(sum));
+            od.setMoney(String.format("%.2f",sum));
             od.setPaid('N');
         }catch (Exception e){
             logger.error("Mysql select error.Does mysql is running?");

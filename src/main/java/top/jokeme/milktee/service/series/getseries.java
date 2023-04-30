@@ -11,7 +11,5 @@ public interface getseries {
     boolean getseriesbyname(String name);
     boolean getseriesbyuuid(Integer uuid);
     toVueMultiData getallseries();
-    toVueMultiData getOrderlySeriesList();
-
     toVueMultiData getSeriesCount();
 }

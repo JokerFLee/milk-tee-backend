@@ -50,26 +50,7 @@ public class updatemilkteaimpl implements updatemilktea {
         milktea tmp;
         milktea mt;
         try {
-
             tmp = milkteaMp.selectOne(qw);
-            if (samplemilktea.getSeries() != tmp.getSeries()){
-                QueryWrapper qw1 = new QueryWrapper<>();
-                QueryWrapper qw2 = new QueryWrapper<>();
-
-                qw1.eq("suid",tmp.getSeries());//Original
-                qw2.eq("suid",samplemilktea.getSeries());//new
-
-                series se1 = seriesMp.selectOne(qw1);
-                series se2 = seriesMp.selectOne(qw2);
-
-                se1.setNumber(se1.getNumber()-1);
-                se2.setNumber(se2.getNumber()+1);
-
-                seriesMp.update(se1,qw1);
-                seriesMp.update(se2,qw2);
-
-            }
-            logger.info(samplemilktea.toString());
             mt = new toOriginal().getOriginalMilkTea(samplemilktea);
             mt.setCreate_date(tmp.getCreate_date());
             try {
