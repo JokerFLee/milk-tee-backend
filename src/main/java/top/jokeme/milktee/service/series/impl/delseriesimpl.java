@@ -21,7 +21,7 @@ public class delseriesimpl implements delseries {
     private seriesMp seriesMp;
 
     @Override
-    public String delseries(String suid) {
+    public boolean delseries(String suid) {
 
         Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -30,9 +30,9 @@ public class delseriesimpl implements delseries {
         Integer x = seriesMp.delete(qw);
         if (x == 1){
             logger.info("Request to delete series by suid : '"+suid+"'");
-            return "200 ok";
+            return true;
         }
         logger.error("Delete series by suid : '"+suid+"' error!");
-        return "error";
+        return false;
     }
 }

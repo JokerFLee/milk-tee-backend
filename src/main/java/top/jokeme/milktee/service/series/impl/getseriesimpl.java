@@ -30,13 +30,15 @@ public class getseriesimpl implements getseries {
         Logger logger = LoggerFactory.getLogger(getClass());
         QueryWrapper qw = new QueryWrapper();
         qw.eq("name", name);
-        logger.info("Getting request for check series exist by name : '" + name + "'");
+
         series x = seriesMp.selectOne(qw);
-        if (x == null) {
-            logger.warn("The request for name : '" + name + "' not exist in series");
-            return false;
+        if (x != null) {
+            logger.info("Request to check series exist by name : '" + name + "' (Yes)");
+            return true;
         }
-        return true;
+        logger.warn("Request for name : '" + name + "' not exist in series (No)");
+        return false;
+
     }
 
     @Override
@@ -44,10 +46,8 @@ public class getseriesimpl implements getseries {
         Logger logger = LoggerFactory.getLogger(getClass());
         QueryWrapper qw = new QueryWrapper();
         qw.eq("suid", uuid);
-        logger.info("Getting request for check series exist by suid : '" + uuid + "'");
         series x = seriesMp.selectOne(qw);
         if (x == null) {
-            logger.warn("The request for suid : '" + uuid + "' not exist in series");
             return false;
         }
         return true;
@@ -60,20 +60,39 @@ public class getseriesimpl implements getseries {
 
         QueryWrapper qw = new QueryWrapper<>().orderByDesc("name");
         List<series> seriesList = null;
-        try{
+        try {
             seriesList = seriesMp.selectList(qw);
             tvj.oneKeyOk();
             List list = new ArrayList<>();
-            for (series se : seriesList){
+            for (series se : seriesList) {
                 HashMap hm = new HashMap<>();
-                hm.put("value",se.getSuid());
-                hm.put("label",se.getName());
+                hm.put("value", se.getSuid());
+                hm.put("label", se.getName());
                 list.add(hm);
             }
             tvj.setDataList(list);
             logger.info("Request for all series list");
-        }catch (Exception e){
+        } catch (Exception e) {
             logger.error("Mysql select all error.Does mysql is running?");
+            tvj.setErrorStatus(true);
+            tvj.setMsg("服务器内部错误!请联系管理员处理");
+        }
+        return tvj;
+    }
+
+    @Override
+    public toVueMultiData getSeriesCount() {
+        Logger logger = LoggerFactory.getLogger(getClass());
+        toVueMultiData tvj = new toVueMultiData<>("/getseriescount");
+        List list = new ArrayList<>();
+        logger.info("is querying the series and its corresponding number");
+        try{
+             list = seriesMp.getserierCount();
+             tvj.oneKeyOk();
+             tvj.setDataList(list);
+             logger.debug("Query series and its number successfully");
+        }catch (Exception e){
+            logger.error("Mysql select all error.Does mysql is running?"+list.toString()+e);
             tvj.setErrorStatus(true);
             tvj.setMsg("服务器内部错误!请联系管理员处理");
         }

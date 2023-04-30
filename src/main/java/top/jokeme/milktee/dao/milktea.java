@@ -1,5 +1,8 @@
 package top.jokeme.milktee.dao;
 
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+
 import java.util.List;
 
 /**
@@ -9,15 +12,25 @@ import java.util.List;
  **/
 public class milktea {
 
+    @TableId
     String guid;
+    @TableField("name")
     String name;
+    @TableField("price")
     double price;
+    @TableField("picurl")
     String picurl;
+    @TableField("intro")
     String intro;
+    @TableField("tips")
     String tips;
+    @TableField("series")
     String series;
+    @TableField(value = "create_date")
     String create_date;
+    @TableField("discount")
     double discount;
+    @TableField("soldout")
     byte soldout;
 
     public String getGuid() {

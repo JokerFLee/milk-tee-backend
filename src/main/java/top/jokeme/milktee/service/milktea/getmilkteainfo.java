@@ -14,5 +14,4 @@ public interface getmilkteainfo {
     toVueSingleData checkExistByName(String name);
     toVueMultiData getMilkTeaInfoByGuid(String guid);
     toVueMultiData getDescSampleTeaList();
-    milktea getRealMilkTeaByGuid(String guid);
 }

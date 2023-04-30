@@ -10,13 +10,12 @@ import java.util.Date;
  **/
 public class NTime {
     public String getNowTime() {
-        Date dt = new Date();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SS");
-        return sdf.format(dt);
+        return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SS").format(new Date());
     }
     public String getShortTime() {
-        Date dt = new Date();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        return sdf.format(dt);
+        return new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+    }
+    public String diyTime(String diy) {
+        return new SimpleDateFormat(diy).format(new Date());
     }
 }

@@ -1,7 +1,9 @@
 package top.jokeme.milktee.service.orderinfo;
 
+import top.jokeme.milktee.entity.general.toVueMultiData;
 import top.jokeme.milktee.entity.orderinfo.OrderContent;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -10,5 +12,5 @@ import java.util.List;
  * date:         2022/11/24
  **/
 public interface orderGenarate {
-    public String orderGenarate(List<OrderContent> moc);
+    public toVueMultiData orderGenarate(HashMap<String,Integer> moc,String money);
 }

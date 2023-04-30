@@ -3,12 +3,14 @@ package top.jokeme.milktee.service.orderinfo.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import top.jokeme.milktee.dao.milktea;
 import top.jokeme.milktee.dao.orderinfo;
+import top.jokeme.milktee.entity.general.toVueMultiData;
 import top.jokeme.milktee.entity.orderinfo.OrderContent;
 import top.jokeme.milktee.entity.orderinfo.orderContentDetail;
 import top.jokeme.milktee.mapper.milkteaMp;
@@ -17,9 +19,7 @@ import top.jokeme.milktee.service.milktea.getmilkteainfo;
 import top.jokeme.milktee.service.orderinfo.orderGenarate;
 import top.jokeme.milktee.utils.NTime;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * project_name: milk-tee
@@ -37,61 +37,74 @@ public class orderGenarateImpl implements orderGenarate {
     @Autowired
     private milkteaMp milkteaMp;
 
-    @Autowired
-    private getmilkteainfo getmilkteainfo;
-
     @Override
-    public String orderGenarate(List<OrderContent> moc) {
-
+    public toVueMultiData orderGenarate(HashMap<String , Integer> moc,String money) {
         Logger logger = LoggerFactory.getLogger(getClass());
-
-        orderinfo oi = new orderinfo();
-
-        oi.setOuid(String.valueOf(UUID.randomUUID()));
-
-        List<orderContentDetail> ocd_l = new ArrayList<>();
-
-        double sumCNY = 0.0;
-        for (OrderContent moct : moc) {
-
-            orderContentDetail ocd = new orderContentDetail();
-
+        toVueMultiData tvj = new toVueMultiData<>("/generateorder");
+        logger.info("Orders to be created");
+        Set<String> set = moc.keySet();
+        double sum = 0.0;
+        for (String str : set){
+            try {
+                QueryWrapper qw = new QueryWrapper<>();
+                qw.eq("guid",str);
+                milktea mt = milkteaMp.selectOne(qw);
+                sum += mt.getPrice() * mt.getDiscount() * moc.get(str);
+            }catch (Exception e){
+                logger.error("Mysql select all error.Does mysql is running?");
+                tvj.setErrorStatus(true);
+                tvj.setMsg("服务器内部错误!请联系管理员处理");
+                return tvj;
+            }
+        }
+        if (sum != Double.parseDouble(money)){
+            logger.warn("Please note! The settlement amount and the amount calculated by the system do not match.");
+            logger.debug("User settlement amount: "+money+" . the amount calculated by the system:"+String.valueOf(sum));
+        }
+        orderinfo od = new orderinfo();
+        try{
             QueryWrapper qw = new QueryWrapper<>();
-            qw.eq("guid",moct.getGuid());
-
-            milktea mt = milkteaMp.selectOne(qw);
-
-            double price = mt.getPrice();
-            double discount = mt.getDiscount();
-            int num = moct.getNum();
-
-            sumCNY += (price*discount*num);
-
-            ocd.setGuid(moct.getGuid());
-            ocd.setNum(moct.getNum());
-            ocd.setRemark(moct.getContent());
-            ocd.setName(moct.getName());
-            ocd_l.add(ocd);
+            NTime nt = new NTime();
+            qw.like("order_time",nt.getShortTime());
+            int count = Math.toIntExact(orderMp.selectCount(qw));
+            String prefix = nt.diyTime("yyyyMMddHHmmss");
+            String suffix = "";
+            if (count <= 9){
+                suffix = "00" + count;
+            }else {
+                suffix = "0" + count;
+            }
+            od.setOuid(prefix+suffix);
+            od.setOrder_detail(new Gson().toJson(moc));
+            od.setOrder_time(nt.getNowTime());
+            od.setCheapcode(null);
+            od.setIsdel((byte) 0);
+            od.setDel_time(null);
+            od.setPay_method(null);
+            od.setRefund((byte) 0);
+            od.setRefund_time(null);
+            od.setMoney(String.format("%.2f",sum));
+            od.setPaid('N');
+        }catch (Exception e){
+            logger.error("Mysql select error.Does mysql is running?");
+            tvj.setErrorStatus(true);
+            tvj.setMsg("服务器内部错误!请联系管理员处理");
+            return tvj;
         }
-        ObjectMapper om = new ObjectMapper();
-        try {
-            oi.setOrder_detail(om.writeValueAsString(ocd_l));
-        } catch (JsonProcessingException e) {
-            logger.error("Jackson JsonProcessingException.");
-            return null;
-//            throw new RuntimeException(e);
+        try{
+            orderMp.insert(od);
+            tvj.oneKeyOk();
+            List list = new ArrayList<>();
+            list.add(od.getOuid());
+            tvj.setDataList(list);
+        }catch (Exception e){
+            logger.error("Mysql insert error.Does mysql is running?");
+            tvj.setErrorStatus(true);
+            tvj.setMsg("服务器内部错误!请联系管理员处理");
+            return tvj;
         }
-        oi.setOrder_time(new NTime().getNowTime());
-        oi.setMoney(String.format("%.2f",sumCNY));
-        oi.setIsdel((byte) 0);
-        oi.setRefund((byte) 0);
-        oi.setDel_time(null);
-        oi.setRefund_time(null);
-
-        if (orderMp.insert(oi) == 1){
-            return oi.getOuid();
-        }else{
-            return null;
-        }
+        logger.info("Order created successfully, return data");
+        tvj.oneKeyOk();
+    return tvj;
     }
 }

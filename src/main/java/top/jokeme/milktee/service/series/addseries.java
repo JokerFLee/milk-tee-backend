@@ -6,5 +6,5 @@ package top.jokeme.milktee.service.series;
  * date:         2022/9/24
  **/
 public interface addseries {
-    String addseries(String series);
+    boolean addseries(String series);
 }

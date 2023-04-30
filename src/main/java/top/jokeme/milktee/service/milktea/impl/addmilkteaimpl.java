@@ -1,14 +1,18 @@
 package top.jokeme.milktee.service.milktea.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.google.gson.Gson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import top.jokeme.milktee.dao.milktea;
+import top.jokeme.milktee.dao.series;
 import top.jokeme.milktee.entity.milktea.milkteaMini;
 import top.jokeme.milktee.entity.general.toVueMultiData;
 import top.jokeme.milktee.mapper.milkteaMp;
+import top.jokeme.milktee.mapper.seriesMp;
 import top.jokeme.milktee.service.milktea.addmilktea;
 import top.jokeme.milktee.utils.NTime;
 import top.jokeme.milktee.utils.uuid;
@@ -24,6 +28,9 @@ public class addmilkteaimpl implements addmilktea {
 
     @Autowired
     private milkteaMp milkteaMp;
+
+    @Autowired
+    private seriesMp seriesMp;
 
     @Override
     public toVueMultiData addmilktee(milkteaMini mtm) {
@@ -42,21 +49,19 @@ public class addmilkteaimpl implements addmilktea {
         mt.setCreate_date(new NTime().getNowTime());
         mt.setDiscount(1f);
         mt.setSoldout((byte) 0);
-
-        logger.info("Save this data to mysql : "+mt.toString());
-        toVueMultiData tvj = new toVueMultiData<Integer>();
+        logger.debug("Insert milktea to mysql");
+        toVueMultiData tvj = new toVueMultiData<Integer>("/addmilktea");
         try {
             milkteaMp.insert(mt);
-            tvj.setLocation("/addmilktea");
             tvj.setErrorStatus(false);
             tvj.setMsg("数据保存成功!");
-            tvj.setDataList(null);
+            logger.info("Insert milktea to mysql success!");
         }catch (Exception e){
             logger.info(e.toString());
-            tvj.setLocation("/addmilktea");
             tvj.setErrorStatus(true);
             tvj.setMsg("数据保存失败!");
-            tvj.setDataList(null);
+
+            logger.warn("Insert milktea to mysql faild!");
         }
         return tvj;
     }

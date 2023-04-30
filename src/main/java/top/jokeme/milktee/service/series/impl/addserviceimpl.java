@@ -8,6 +8,7 @@ import top.jokeme.milktee.dao.series;
 import top.jokeme.milktee.mapper.seriesMp;
 import top.jokeme.milktee.service.series.addseries;
 import top.jokeme.milktee.service.series.getseries;
+import top.jokeme.milktee.utils.NTime;
 import top.jokeme.milktee.utils.uuid;
 
 /**
@@ -26,36 +27,37 @@ public class addserviceimpl implements addseries {
     private getseries getseries;
 
     @Override
-    public String addseries(String se) {
+    public boolean addseries(String se) {
         Logger logger = LoggerFactory.getLogger(getClass());
 
-        if(se==""){
+        if (se == "" || se == null) {
             logger.warn("Can't add null series name");
-            return "error";
+            return false;
         }
         uuid uid = new uuid();
         Integer x = uid.shortuuid();
-
-
-        while (getseries.getseriesbyuuid(x)){
+        logger.info("Check if the generated suid is duplicated(重复)");
+        while (getseries.getseriesbyuuid(x)) {
+            logger.warn("suid is repeated, generating another");
             x = uid.shortuuid();
         }
-
+        logger.info("What luck! The generated suid is not duplicated");
         series serie = new series();
         serie.setName(se);
         serie.setSuid(x);
+        serie.setCreate_date(new NTime().getNowTime());
 
         if (!getseries.getseriesbyname(se)) {
             Integer y = seriesMp.insert(serie);
             if (y == 1) {
-                logger.info("xxx add series : " + se + " success!");
-                return "200 ok";
-            }else {
-                logger.error("Insert series into mysql error, returnd : '"+ y +"'");
+                logger.debug("Add series : " + se + " successfully!");
+                return true;
+            } else {
+                logger.error("Insert series into mysql error, returned : '" + y + "'");
             }
-        }else{
-            logger.warn("Try to add a exist series name : '"+se+"'");
+        } else {
+            logger.warn("Try to add a exist series name : '" + se + "'");
         }
-        return "error";
+        return false;
     }
 }

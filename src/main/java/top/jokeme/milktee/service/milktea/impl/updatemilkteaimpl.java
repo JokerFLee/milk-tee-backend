@@ -6,9 +6,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import top.jokeme.milktee.dao.milktea;
+import top.jokeme.milktee.dao.series;
 import top.jokeme.milktee.entity.samplemilktea;
 import top.jokeme.milktee.entity.general.toVueMultiData;
 import top.jokeme.milktee.mapper.milkteaMp;
+import top.jokeme.milktee.mapper.seriesMp;
 import top.jokeme.milktee.service.milktea.getmilkteainfo;
 import top.jokeme.milktee.service.milktea.updatemilktea;
 import top.jokeme.milktee.utils.toOriginal;
@@ -28,6 +30,9 @@ public class updatemilkteaimpl implements updatemilktea {
     @Autowired
     private getmilkteainfo getmilkteainfo;
 
+    @Autowired
+    private seriesMp seriesMp;
+
 
     /*
      * 这种方法最简单了，直接把前端传过来的 samplemilktea 类型
@@ -46,7 +51,6 @@ public class updatemilkteaimpl implements updatemilktea {
         milktea mt;
         try {
             tmp = milkteaMp.selectOne(qw);
-            logger.info(samplemilktea.toString());
             mt = new toOriginal().getOriginalMilkTea(samplemilktea);
             mt.setCreate_date(tmp.getCreate_date());
             try {
